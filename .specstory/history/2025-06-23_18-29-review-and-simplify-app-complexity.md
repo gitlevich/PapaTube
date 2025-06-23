@@ -2966,3 +2966,84 @@ Read file: specs/touch_map.md
 
 ---
 
+```diff
+     • Touch:  
+        – RG active (tap tile chooses Video)  
+-       – VS active for Prev / Next actions  
+        – CO active for Prev / Next buttons  
+        – VS blocked  
+```
+
+---
+
+`specs/touch_map.md` corrected: the “VS active for Prev/Next actions” bullet is removed, eliminating the contradiction.
+
+---
+
+_**User**_
+
+commit and push just the files in spec/
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```bash
+git add specs/interactions.md specs/touch_map.md
+```
+
+```
+vlad@boXfriend ptube % 
+
+```
+
+---
+
+```bash
+git commit -m "docs: add interaction catalogue and touch map specs"
+```
+
+```
+vlad@boXfriend ptube % git commit -m "docs: add interaction catalogue and touch map specs"
+[master 9f9bc9f] docs: add interaction catalogue and touch map specs
+ 2 files changed, 119 insertions(+)
+ create mode 100644 specs/interactions.md
+ create mode 100644 specs/touch_map.md
+vlad@boXfriend ptube %
+```
+
+---
+
+```bash
+git push
+```
+
+```
+vlad@boXfriend ptube % git push
+Enumerating objects: 63, done.
+Counting objects: 100% (63/63), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (40/40), done.
+Writing objects: 100% (44/44), 38.89 KiB | 4.32 MiB/s, done.
+Total 44 (delta 22), reused 0 (delta 0)
+remote: Resolving deltas: 100% (22/22), completed with 13 local objects.
+To github.com:gitlevich/PapaTube.git
+   8043141..9f9bc9f  master -> master
+vlad@boXfriend ptube %
+```
+
+---
+
+Committed and pushed the spec updates:
+
+• specs/interactions.md  
+• specs/touch_map.md
+
+Git remote is now at `9f9bc9f` with the commit message “docs: add interaction catalogue and touch map specs”.
+
+---
+
