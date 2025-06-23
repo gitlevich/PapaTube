@@ -3,37 +3,64 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		04291E435A4CDDEF3CF154A1 /* OctoKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9E5CDDF5438BC091F8680B4 /* OctoKit */; };
 		0A64F50FAA27FD6A8D1B3295 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */; };
 		23513AED20208DF87D935ECF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC862EDE0B0B1A9D4263D78 /* Config.swift */; };
+		333333333333333333333333 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222222222222 /* AuthService.swift */; };
+		555555555555555555555555 /* YouTubePlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444444444444444444444444 /* YouTubePlaylistService.swift */; };
+		777777777777777777777777 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666666666666666666666666 /* AppModel.swift */; };
+		87654321FEDCBA0987654321 /* PlaybackStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1234567890ABCDEF12345678 /* PlaybackStateMachine.swift */; };
 		884713451AB3B2A06854C6C0 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1930077BED55418E0626D /* Video.swift */; };
 		8CD60132DFB9C0492ED1B9E6 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */; };
+		999999999999999999999999 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888888888888888888888888 /* SettingsSheet.swift */; };
 		A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDADC268B67BDB4082084C18 /* Collection+Safe.swift */; };
 		BC0B93811797175D8F654BDB /* PlaybackStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */; };
 		C1DE9CD1504D6734B451AF18 /* PtubeAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059557B547534300B254B780 /* PtubeAppApp.swift */; };
 		D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CD7597F06529525CE5528 /* PlayerScreen.swift */; };
 		EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */; };
 		F34BBCA780C3C2920C6D55D3 /* PlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */; };
+		F56863382E08EB1F00067D6E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F56863372E08EB1F00067D6E /* GoogleSignIn */; };
+		F568633A2E08EB1F00067D6E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F56863392E08EB1F00067D6E /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F56863452E091FEF00067D6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 401FA62F63E503FF308E4C74 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1F2498E4CEB382FED46AB53;
+			remoteInfo = PtubeApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		059557B547534300B254B780 /* PtubeAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtubeAppApp.swift; sourceTree = "<group>"; };
 		0AC862EDE0B0B1A9D4263D78 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		1234567890ABCDEF12345678 /* PlaybackStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateMachine.swift; sourceTree = "<group>"; };
 		21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateStore.swift; sourceTree = "<group>"; };
+		222222222222222222222222 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		290CD7597F06529525CE5528 /* PlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScreen.swift; sourceTree = "<group>"; };
 		388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		444444444444444444444444 /* YouTubePlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlaylistService.swift; sourceTree = "<group>"; };
+		666666666666666666666666 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		85B694751FCBC9011C761A45 /* PtubeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PtubeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		888888888888888888888888 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		CB42F1E639BD87E58117B048 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		DCC1930077BED55418E0626D /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		EF175A34ED43A295FD3C0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistService.swift; sourceTree = "<group>"; };
+		F56863412E091FEF00067D6E /* PtubeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PtubeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F56863422E091FEF00067D6E /* PtubeAppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PtubeAppTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DFAB025814B9E65AE3B5DC4C /* Frameworks */ = {
@@ -42,6 +69,15 @@
 			files = (
 				8CD60132DFB9C0492ED1B9E6 /* YouTubePlayerKit in Frameworks */,
 				04291E435A4CDDEF3CF154A1 /* OctoKit in Frameworks */,
+				F56863382E08EB1F00067D6E /* GoogleSignIn in Frameworks */,
+				F568633A2E08EB1F00067D6E /* GoogleSignInSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F568633E2E091FEF00067D6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +89,10 @@
 			children = (
 				21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */,
 				F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */,
+				1234567890ABCDEF12345678 /* PlaybackStateMachine.swift */,
+				666666666666666666666666 /* AppModel.swift */,
+				444444444444444444444444 /* YouTubePlaylistService.swift */,
+				222222222222222222222222 /* AuthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -61,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				290CD7597F06529525CE5528 /* PlayerScreen.swift */,
+				888888888888888888888888 /* SettingsSheet.swift */,
 				D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */,
 			);
 			path = Views;
@@ -70,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				85B694751FCBC9011C761A45 /* PtubeApp.app */,
+				F56863412E091FEF00067D6E /* PtubeAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +144,7 @@
 			children = (
 				7FCA86BF0A3EABD880B24D23 /* ptube */,
 				60CD7925B145FB5AFA09790B /* PtubeApp */,
+				F56863422E091FEF00067D6E /* PtubeAppTests */,
 				503F4A236CCCFC399844EE18 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -142,10 +185,35 @@
 			packageProductDependencies = (
 				221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */,
 				A9E5CDDF5438BC091F8680B4 /* OctoKit */,
+				F56863372E08EB1F00067D6E /* GoogleSignIn */,
+				F56863392E08EB1F00067D6E /* GoogleSignInSwift */,
 			);
 			productName = PtubeApp;
 			productReference = 85B694751FCBC9011C761A45 /* PtubeApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F56863402E091FEF00067D6E /* PtubeAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PtubeAppTests" */;
+			buildPhases = (
+				F568633D2E091FEF00067D6E /* Sources */,
+				F568633E2E091FEF00067D6E /* Frameworks */,
+				F568633F2E091FEF00067D6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F56863462E091FEF00067D6E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F56863422E091FEF00067D6E /* PtubeAppTests */,
+			);
+			name = PtubeAppTests;
+			packageProductDependencies = (
+			);
+			productName = PtubeAppTests;
+			productReference = F56863412E091FEF00067D6E /* PtubeAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -154,7 +222,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					F56863402E091FEF00067D6E = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = F1F2498E4CEB382FED46AB53;
+					};
+				};
 			};
 			buildConfigurationList = C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PtubeApp" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -169,16 +244,25 @@
 			packageReferences = (
 				B4938E54F658D0548D97CD3D /* XCRemoteSwiftPackageReference "octokit.swift" */,
 				B5A30A464F4B8F5276F680F1 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				F56863362E08EB1F00067D6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				F1F2498E4CEB382FED46AB53 /* PtubeApp */,
+				F56863402E091FEF00067D6E /* PtubeAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F568633F2E091FEF00067D6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F843527681C2DACBF7F5D25C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,15 +281,35 @@
 				A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */,
 				23513AED20208DF87D935ECF /* Config.swift in Sources */,
 				BC0B93811797175D8F654BDB /* PlaybackStateStore.swift in Sources */,
+				87654321FEDCBA0987654321 /* PlaybackStateMachine.swift in Sources */,
+				999999999999999999999999 /* SettingsSheet.swift in Sources */,
+				777777777777777777777777 /* AppModel.swift in Sources */,
 				D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */,
 				F34BBCA780C3C2920C6D55D3 /* PlaylistService.swift in Sources */,
 				C1DE9CD1504D6734B451AF18 /* PtubeAppApp.swift in Sources */,
 				884713451AB3B2A06854C6C0 /* Video.swift in Sources */,
 				EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */,
+				555555555555555555555555 /* YouTubePlaylistService.swift in Sources */,
+				333333333333333333333333 /* AuthService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F568633D2E091FEF00067D6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F56863462E091FEF00067D6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1F2498E4CEB382FED46AB53 /* PtubeApp */;
+			targetProxy = F56863452E091FEF00067D6E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		614110DFC90042839A2DACF6 /* Debug */ = {
@@ -369,6 +473,60 @@
 			};
 			name = Debug;
 		};
+		F56863472E091FEF00067D6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YBCP8WY4VN;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = farm.agent.PtubeAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PtubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PtubeApp";
+			};
+			name = Debug;
+		};
+		F56863482E091FEF00067D6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YBCP8WY4VN;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = farm.agent.PtubeAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PtubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PtubeApp";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -386,6 +544,15 @@
 			buildConfigurations = (
 				DFCE835295D9502E99C7FE70 /* Debug */,
 				A5A3865CF557CBD4DB3BF645 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PtubeAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F56863472E091FEF00067D6E /* Debug */,
+				F56863482E091FEF00067D6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -409,6 +576,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		F56863362E08EB1F00067D6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -421,6 +596,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B4938E54F658D0548D97CD3D /* XCRemoteSwiftPackageReference "octokit.swift" */;
 			productName = OctoKit;
+		};
+		F56863372E08EB1F00067D6E /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F56863362E08EB1F00067D6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		F56863392E08EB1F00067D6E /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F56863362E08EB1F00067D6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

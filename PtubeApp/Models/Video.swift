@@ -23,4 +23,10 @@ struct Video: Identifiable, Codable {
         }
         return nil
     }
+}
+
+extension Video: Equatable {
+    static func == (lhs: Video, rhs: Video) -> Bool {
+        lhs.id == rhs.id
+    }
 } 
