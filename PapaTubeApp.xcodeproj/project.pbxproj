@@ -47,21 +47,21 @@
 		388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		444444444444444444444444 /* YouTubePlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlaylistService.swift; sourceTree = "<group>"; };
 		666666666666666666666666 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
-		85B694751FCBC9011C761A45 /* PtubeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PtubeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		85B694751FCBC9011C761A45 /* PapaTubeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaTubeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		888888888888888888888888 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		CB42F1E639BD87E58117B048 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		DCC1930077BED55418E0626D /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		EF175A34ED43A295FD3C0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistService.swift; sourceTree = "<group>"; };
-		F56863412E091FEF00067D6E /* PtubeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PtubeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F56863412E091FEF00067D6E /* PapaTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PapaTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F568634D2E0936FB00067D6E /* player_behaviour.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = player_behaviour.md; sourceTree = "<group>"; };
 		F56863502E09388100067D6E /* terminology.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = terminology.md; sourceTree = "<group>"; };
 		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F56863422E091FEF00067D6E /* PtubeAppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PtubeAppTests; sourceTree = "<group>"; };
+		F56863422E091FEF00067D6E /* PapaTubeAppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PapaTubeAppTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +111,8 @@
 		503F4A236CCCFC399844EE18 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				85B694751FCBC9011C761A45 /* PtubeApp.app */,
-				F56863412E091FEF00067D6E /* PtubeAppTests.xctest */,
+				85B694751FCBC9011C761A45 /* PapaTubeApp.app */,
+				F56863412E091FEF00067D6E /* PapaTubeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,7 +125,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		60CD7925B145FB5AFA09790B /* PtubeApp */ = {
+		60CD7925B145FB5AFA09790B /* PapaTubeApp */ = {
 			isa = PBXGroup;
 			children = (
 				0AC862EDE0B0B1A9D4263D78 /* Config.swift */,
@@ -137,7 +137,7 @@
 				08C466DF0A8E5672E90F5BEB /* Services */,
 				3A160BA9E1CB27CB5946CFDA /* Views */,
 			);
-			path = PtubeApp;
+			path = PapaTubeApp;
 			sourceTree = "<group>";
 		};
 		73BEA0A3E048B9B3127FC34A = {
@@ -145,19 +145,19 @@
 			children = (
 				F568634C2E0936FB00067D6E /* notes */,
 				F568634E2E0936FB00067D6E /* specs */,
-				7FCA86BF0A3EABD880B24D23 /* ptube */,
-				60CD7925B145FB5AFA09790B /* PtubeApp */,
-				F56863422E091FEF00067D6E /* PtubeAppTests */,
+				7FCA86BF0A3EABD880B24D23 /* PapaTube */,
+				60CD7925B145FB5AFA09790B /* PapaTubeApp */,
+				F56863422E091FEF00067D6E /* PapaTubeAppTests */,
 				503F4A236CCCFC399844EE18 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		7FCA86BF0A3EABD880B24D23 /* ptube */ = {
+		7FCA86BF0A3EABD880B24D23 /* PapaTube */ = {
 			isa = PBXGroup;
 			children = (
 				CB42F1E639BD87E58117B048 /* Secrets.xcconfig */,
 			);
-			name = ptube;
+			name = PapaTube;
 			path = .;
 			sourceTree = "<group>";
 		};
@@ -188,9 +188,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F1F2498E4CEB382FED46AB53 /* PtubeApp */ = {
+		F1F2498E4CEB382FED46AB53 /* PapaTubeApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PtubeApp" */;
+			buildConfigurationList = 5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PapaTubeApp" */;
 			buildPhases = (
 				AF6D8073418A4C7037A4DBDF /* Sources */,
 				F843527681C2DACBF7F5D25C /* Resources */,
@@ -200,7 +200,7 @@
 			);
 			dependencies = (
 			);
-			name = PtubeApp;
+			name = PapaTubeApp;
 			packageProductDependencies = (
 				221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */,
 				A9E5CDDF5438BC091F8680B4 /* OctoKit */,
@@ -208,12 +208,12 @@
 				F56863392E08EB1F00067D6E /* GoogleSignInSwift */,
 			);
 			productName = PtubeApp;
-			productReference = 85B694751FCBC9011C761A45 /* PtubeApp.app */;
+			productReference = 85B694751FCBC9011C761A45 /* PapaTubeApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F56863402E091FEF00067D6E /* PtubeAppTests */ = {
+		F56863402E091FEF00067D6E /* PapaTubeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PtubeAppTests" */;
+			buildConfigurationList = F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PapaTubeTests" */;
 			buildPhases = (
 				F568633D2E091FEF00067D6E /* Sources */,
 				F568633E2E091FEF00067D6E /* Frameworks */,
@@ -225,13 +225,13 @@
 				F56863462E091FEF00067D6E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				F56863422E091FEF00067D6E /* PtubeAppTests */,
+				F56863422E091FEF00067D6E /* PapaTubeAppTests */,
 			);
-			name = PtubeAppTests;
+			name = PapaTubeTests;
 			packageProductDependencies = (
 			);
 			productName = PtubeAppTests;
-			productReference = F56863412E091FEF00067D6E /* PtubeAppTests.xctest */;
+			productReference = F56863412E091FEF00067D6E /* PapaTubeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -250,7 +250,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PtubeApp" */;
+			buildConfigurationList = C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PapaTubeApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -268,8 +268,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F1F2498E4CEB382FED46AB53 /* PtubeApp */,
-				F56863402E091FEF00067D6E /* PtubeAppTests */,
+				F1F2498E4CEB382FED46AB53 /* PapaTubeApp */,
+				F56863402E091FEF00067D6E /* PapaTubeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -326,7 +326,7 @@
 /* Begin PBXTargetDependency section */
 		F56863462E091FEF00067D6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F1F2498E4CEB382FED46AB53 /* PtubeApp */;
+			target = F1F2498E4CEB382FED46AB53 /* PapaTubeApp */;
 			targetProxy = F56863452E091FEF00067D6E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -339,8 +339,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = YBCP8WY4VN;
-				INFOPLIST_FILE = PtubeApp/Info.plist;
-				INFO_PLIST_FILE = PtubeApp/Info.plist;
+				INFOPLIST_FILE = PapaTubeApp/Info.plist;
+				INFO_PLIST_FILE = PapaTubeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -416,8 +416,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = YBCP8WY4VN;
-				INFOPLIST_FILE = PtubeApp/Info.plist;
-				INFO_PLIST_FILE = PtubeApp/Info.plist;
+				INFOPLIST_FILE = PapaTubeApp/Info.plist;
+				INFO_PLIST_FILE = PapaTubeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -518,7 +518,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PtubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PtubeApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PapaTubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PapaTubeApp";
 			};
 			name = Debug;
 		};
@@ -542,7 +542,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PtubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PtubeApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PapaTubeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PapaTubeApp";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -550,7 +550,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PtubeApp" */ = {
+		5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PapaTubeApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				614110DFC90042839A2DACF6 /* Debug */,
@@ -559,7 +559,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PtubeApp" */ = {
+		C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PapaTubeApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DFCE835295D9502E99C7FE70 /* Debug */,
@@ -568,7 +568,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PtubeAppTests" */ = {
+		F56863492E091FEF00067D6E /* Build configuration list for PBXNativeTarget "PapaTubeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F56863472E091FEF00067D6E /* Debug */,

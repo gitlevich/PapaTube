@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
-               BuildableName = "PtubeApp.app"
-               BlueprintName = "PtubeApp"
+               BuildableName = "PapaTubeApp.app"
+               BlueprintName = "PapaTubeApp"
                ReferencedContainer = "container:PtubeApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
-            BuildableName = "PtubeApp.app"
-            BlueprintName = "PtubeApp"
+            BuildableName = "PapaTubeApp.app"
+            BlueprintName = "PapaTubeApp"
             ReferencedContainer = "container:PtubeApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F56863402E091FEF00067D6E"
-               BuildableName = "PtubeAppTests.xctest"
-               BlueprintName = "PtubeAppTests"
+               BuildableName = "PapaTubeTests.xctest"
+               BlueprintName = "PapaTubeTests"
                ReferencedContainer = "container:PtubeApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
-            BuildableName = "PtubeApp.app"
-            BlueprintName = "PtubeApp"
+            BuildableName = "PapaTubeApp.app"
+            BlueprintName = "PapaTubeApp"
             ReferencedContainer = "container:PtubeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
-            BuildableName = "PtubeApp.app"
-            BlueprintName = "PtubeApp"
+            BuildableName = "PapaTubeApp.app"
+            BlueprintName = "PapaTubeApp"
             ReferencedContainer = "container:PtubeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
