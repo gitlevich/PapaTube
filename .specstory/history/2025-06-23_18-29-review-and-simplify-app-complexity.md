@@ -1761,7 +1761,1204 @@ No results found
 
 ---
 
+```diff
+              if app.isEnded {
+                  RecommendationGrid(
+-                     videos: playlistStore.videos.enumerated().filter { $0.offset != app.currentIndex }.map { $0.element },
++                     videos: recommendationVideos,
+                      onSelect: { video in
+                          if let idx = playlistStore.videos.firstIndex(of: video) {
+```
 
+```diff
+          }
+      }
++ 
++     // Precomputed list for recommendation grid (skip current video)
++     private var recommendationVideos: [Video] {
++         playlistStore.videos.enumerated().filter { $0.offset != app.currentIndex }.map { $0.element }
++     }
+  
+      private var controlsOverlay: some View {
+```
+
+---
+
+
+
+---
+
+```diff
+  		F57FB0682E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
+  		F57FB0692E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
++ 		AA111111111111111111111111 /* RecommendationGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA222222222222222222222222 /* RecommendationGrid.swift */; };
+  /* End PBXBuildFile section */
+  
+```
+
+```diff
+  		F57FB0672E09CA3D00E337DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+  		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
++ 		AA222222222222222222222222 /* RecommendationGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationGrid.swift; sourceTree = "<group>"; };
+  /* End PBXFileReference section */
+  
+```
+
+```diff
+  				888888888888888888888888 /* SettingsSheet.swift */,
+  				D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */,
++ 				AA222222222222222222222222 /* RecommendationGrid.swift */,
+  			);
+  			path = Views;
+```
+
+```diff
+  				555555555555555555555555 /* PlaylistStore.swift in Sources */,
+  				333333333333333333333333 /* AuthService.swift in Sources */,
++ 				AA111111111111111111111111 /* RecommendationGrid.swift in Sources */,
+  			);
+  			runOnlyForDeploymentPostprocessing = 0;
+```
+
+---
+
+
+
+---
+
+<details>
+            <summary>Grep search for "23513AED20208DF87D935ECF" • **0** files</summary>
+        
+No results found
+</details>
+
+---
+
+
+
+---
+
+<details>
+            <summary>Searched codebase "PapaTubeApp.swift" • **10** results</summary>
+        
+| File |
+|------|
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+| `undefined` |
+
+</details>
+
+---
+
+
+
+---
+
+<details>
+            <summary>Searched codebase "PtubeAppApp.swift" • **3** results</summary>
+        
+| File |
+|------|
+| `undefined` |
+| `undefined` |
+| `undefined` |
+
+</details>
+
+---
+
+
+
+---
+
+Fixed build errors.
+
+1. RecommendationGrid missing  
+   • Added `RecommendationGrid.swift` to the Xcode project (file reference, build-file entry, Views group, Sources phase).  
+
+2. Long expression in PlayerScreen  
+   • Introduced a computed property `recommendationVideos` and replaced the chained enumerate/filter/map call.  
+   • Compiler no longer struggles with that expression.
+
+Project now contains:
+   • AA222… RecommendationGrid.swift reference  
+   • AA111… RecommendationGrid.swift in Sources  
+   • Updated Sources list.
+
+PlayerScreen changes:
+```swift
+// new helper
+private var recommendationVideos: [Video] {
+    playlistStore.videos.enumerated()
+        .filter { $0.offset != app.currentIndex }
+        .map { $0.element }
+}
+
+// simplified call
+RecommendationGrid(
+    videos: recommendationVideos,
+    onSelect: { … })
+```
+
+Config.swift and the API-key entry were removed; project file references cleaned up. Build should succeed.
+
+---
+
+_**User**_
+
+describe our current object model
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Current domain-level objects
+
+1. Video (struct, value type)  
+   • title : String  
+   • year  : Int?  
+   • youtube_url : String  
+   • id     (derived from URL)  
+   • url    (URL)
+
+Core state container
+
+2. AppModel (ObservableObject, @MainActor)  
+   • playlistStore : PlaylistStore  
+   • player        : YouTubePlayer  
+   • positions     : [videoID: Double]          // resume points  
+   • playingStates : [videoID: Bool]            // was-playing flags  
+   • playlist      : [Video]  (Published)  
+   • currentIndex  : Int      (Published)  
+   • isPlaying / isEnded     (Published)  
+   Persistence: reads/writes UserDefaults; provides play/pause/load/next/prev helpers.
+
+Data / auth services
+
+3. PlaylistStore (ObservableObject)  
+   • state : enum { idle | loading | loaded \([Video]) | failed(msg) } (Published)  
+   • videos : [Video]  // convenience  
+   Responsibilities: extract playlist ID, fetch all items via YouTube Data API v3, cache to disk, auto-refresh on auth changes.
+
+4. AuthService (ObservableObject singleton)  
+   • isSignedIn : Bool (Published)  
+   • accessToken : String? (Published)  
+   Handles Google-Sign-In, requests `youtube.readonly` scope, exposes bearer token to PlaylistStore.
+
+UI layer
+
+5. PlayerScreen (SwiftUI View)  
+   Local @State: playback controls visibility, scrubbing, fade timer, etc.  
+   Injected `@EnvironmentObject var app : AppModel`.  
+   Renders VideoPlayerView, overlays, RecommendationGrid, SettingsSheet; reacts to publishers from YouTubePlayer and AppModel.
+
+6. RecommendationGrid (View)  
+   Grid of Video thumbnails; callback `onSelect(Video)`.
+
+7. VideoPlayerView (View)  
+   Thin wrapper around `YouTubePlayerView`.
+
+Utility
+
+8. Collection+Safe (extension)  
+   Bounds-checked subscript.
+
+No remaining `PlaybackStateStore`, `PlaylistService`, or API-key–based Config; all playlist access goes through OAuth via `PlaylistStore`.
+
+---
+
+_**User**_
+
+what is the meaning of AppModel?
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+`AppModel` is the single, observable source-of-truth for runtime state:
+
+• Owns the player, playlist data source, and persisted playback info.  
+• Publishes high-level UI state (`playlist`, `currentIndex`, `isPlaying`, `isEnded`) so views can react.  
+• Bridges services and UI: listens to `PlaylistStore` and `YouTubePlayer`, exposes simple control methods (`play/pause/next/prev/load`).  
+Think of it as the app’s view-model/root store—centralizes state and side-effects that must be shared across screens.
+
+---
+
+_**User**_
+
+list all interactions the app supports, in our domain language (see @terminology.md ) by reading code and writing them out one by one. use given/when/then 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Interactions (expressed in the domain language from terminology.md)
+
+1. Play / Pause  
+   Given Controls are visible and Player is paused  
+   When the user taps the Play toggle  
+   Then `isPlaying` becomes true and Player starts rendering frames  
+   —and vice-versa for a second tap (pause).
+
+2. Next  
+   Given the Playlist is not at its last Video  
+   When the user taps the Next button  
+   Then `currentIndex` is incremented and Player loads the next Video.
+
+3. Previous  
+   Given the Playlist is not at its first Video  
+   When the user taps the Prev button  
+   Then `currentIndex` is decremented and Player loads the previous Video.
+
+4. Scrub (seek)  
+   Given Controls are visible  
+   When the user drags the Scrub bar  
+   Then `currentTime` follows the thumb and, on release, Player seeks to that position.
+
+5. Idle-fade  
+   Given Controls are fully opaque and the Video is playing  
+   When 5 seconds pass without user input  
+   Then Controls opacity animates to 15 %.
+
+6. Show Controls after interaction  
+   Given Controls are faded  
+   When the user taps anywhere or playback state changes  
+   Then Controls return to full opacity and the Idle-fade timer restarts.
+
+7. Startup snapshot  
+   Given the app launches and a previous resume point exists for the first Video  
+   When Player loads  
+   Then it seeks to the stored `currentTime`, paused.
+
+8. Persist on background  
+   Given the app enters background  
+   When `UIApplication.willResignActive` fires  
+   Then AppModel saves `positions`, `playingStates`, and pauses Player.
+
+9. Video completion → Recommendation strip  
+   Given the current Video reaches its end (YouTube `.ended` or 0.5 s from duration)  
+   When `isEnded` flips to true  
+   Then Controls hide, touches lock, and Recommendation strip appears.
+
+10. Select recommendation  
+   Given Recommendation strip is visible  
+   When the user taps a Video thumbnail  
+   Then that Video loads, `isEnded` resets, and playback starts immediately.
+
+11. Open Settings  
+   Given Controls are visible  
+   When the user taps the gear icon  
+   Then Settings sheet opens.
+
+12. Change Playlist ID  
+   Given Settings sheet is open  
+   When the user enters a new playlist URL/ID and confirms  
+   Then PlaylistStore refreshes, caching new Videos and updating Playlist.
+
+13. Google sign-in  
+   Given the user is not authenticated  
+   When they tap “Authenticate with Google” in Settings  
+   Then AuthService runs Google Sign-In and, on success, PlaylistStore refreshes with the user’s OAuth token.
+
+14. Google sign-out  
+   Given the user is authenticated  
+   When they tap “Sign out of Google” in Settings  
+   Then AuthService clears tokens and PlaylistStore moves to “Not signed in” state.
+
+---
+
+_**User**_
+
+wrong abstraction level: "Then isPlaying becomes true and Player starts rendering frames";
+expected: "Then the video plays". need more examples? or clear?
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Understood—let’s restate the interactions strictly in domain terms.
+
+1. Play / Pause  
+   Given Controls are visible and the current Video is paused  
+   When the viewer presses the Play toggle  
+   Then the Video plays  
+   —and vice-versa: if the Video is playing, pressing the toggle pauses it.
+
+2. Next  
+   Given the Playlist has a next Video  
+   When the viewer presses the Next button  
+   Then the next Video in the Playlist begins playing.
+
+3. Previous  
+   Given the Playlist has a previous Video  
+   When the viewer presses the Prev button  
+   Then the previous Video in the Playlist begins playing.
+
+4. Scrub (seek)  
+   Given Controls are visible  
+   When the viewer drags the Scrub bar and releases at time T  
+   Then playback continues from time T in the current Video.
+
+5. Idle-fade  
+   Given Controls are fully visible while a Video is playing  
+   When 5 seconds pass with no viewer interaction  
+   Then Controls fade to 15 % opacity.
+
+6. Wake Controls  
+   Given Controls are faded  
+   When the viewer taps the screen or any button becomes active  
+   Then Controls return to full opacity and the idle-fade timer restarts.
+
+7. Startup resume  
+   Given the app launches and a resume point exists for the first Video  
+   When the initial frame appears  
+   Then that Video stands paused at the saved time.
+
+8. Background save  
+   Given the viewer is watching any Video  
+   When the app moves to the background  
+   Then the current position and playing/paused status are stored.
+
+9. Video completion → Recommendations  
+   Given the current Video ends  
+   When the end frame is reached  
+   Then Controls hide and the Recommendation strip appears.
+
+10. Select recommendation  
+   Given the Recommendation strip is visible  
+   When the viewer selects a Video thumbnail  
+   Then that Video begins playing immediately.
+
+11. Open Settings  
+   Given Controls are visible  
+   When the viewer presses the gear icon  
+   Then the Settings sheet opens.
+
+12. Change Playlist  
+   Given the Settings sheet is open  
+   When the viewer enters a new playlist URL or ID and commits  
+   Then the new Playlist is loaded and displayed.
+
+13. Google sign-in  
+   Given the viewer is not authenticated  
+   When they press “Authenticate with Google” in Settings  
+   Then they sign in, and private playlists become available.
+
+14. Google sign-out  
+   Given the viewer is authenticated  
+   When they press “Sign out of Google” in Settings  
+   Then they are signed out and private playlists become unavailable.
+
+---
+
+_**User**_
+
+include state of each control relevant to the interaction. for examples, in 1: 
+
+"Then the Video plays, and the play toggle changes to pause."
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+1. Play / Pause  
+   Given Controls are visible, the Video is paused, and the Play toggle shows “Play”  
+   When the viewer presses the Play toggle  
+   Then the Video plays, and the Play toggle changes to “Pause”.
+
+2. Pause while playing  
+   Given the Video is playing, and the Play toggle shows “Pause”  
+   When the viewer presses the Play toggle  
+   Then the Video pauses, and the Play toggle changes to “Play”.
+
+3. Next  
+   Given the Playlist has a next Video and the Next button is enabled  
+   When the viewer presses the Next button  
+   Then the next Video begins playing, Prev button is enabled, and the Next button is disabled if now at the last Video.
+
+4. Previous  
+   Given the Playlist has a previous Video and the Prev button is enabled  
+   When the viewer presses the Prev button  
+   Then the previous Video begins playing, Next button becomes enabled, and Prev button is disabled if now at the first Video.
+
+5. Scrub (seek)  
+   Given Controls are visible and the Scrub bar shows current progress  
+   When the viewer drags the Scrub bar and releases at time T  
+   Then the Video resumes playing from time T, and the Scrub bar thumb jumps to time T.
+
+6. Idle-fade  
+   Given Controls are fully visible (100 % opacity) while a Video is playing  
+   When 5 seconds elapse with no viewer interaction  
+   Then Controls fade to 15 % opacity.
+
+7. Wake Controls  
+   Given Controls are faded (15 % opacity)  
+   When the viewer taps the screen or interacts with any control  
+   Then Controls return to 100 % opacity and the idle-fade timer restarts.
+
+8. Startup resume  
+   Given the app launches and a saved resume point exists  
+   When the first frame appears  
+   Then the Video is paused at that saved time, Play toggle shows “Play”, and Scrub bar reflects the saved position.
+
+9. Background save  
+   Given any Video is loaded (playing or paused)  
+   When the app moves to the background  
+   Then the current position and playing/paused status are stored; the Video pauses and the Play toggle shows “Play”.
+
+10. Video completion → Recommendations  
+   Given the Video reaches its end frame  
+   When playback finishes  
+   Then Controls hide, touch input outside them is locked, and the Recommendation strip appears.
+
+11. Select recommendation  
+   Given the Recommendation strip is visible  
+   When the viewer taps a Video thumbnail  
+   Then that Video loads and starts playing, Controls become visible, Play toggle shows “Pause”, and the Recommendation strip disappears.
+
+12. Open Settings  
+   Given Controls are visible  
+   When the viewer presses the gear icon  
+   Then the Settings sheet slides up and all overlay controls become inactive behind it.
+
+13. Change Playlist  
+   Given the Settings sheet is open  
+   When the viewer enters a new playlist URL/ID and confirms  
+   Then the Playlist updates, the first Video of the new list pauses at frame 0, Next/Prev buttons reset (Prev disabled, Next enabled).
+
+14. Google sign-in / sign-out  
+   14a Sign-in:  
+     Given the viewer is not authenticated and the “Authenticate with Google” button is shown  
+     When it is pressed and sign-in succeeds  
+     Then private playlists can be loaded, and the button label changes to “Sign out of Google”.  
+   14b Sign-out:  
+     Given the viewer is authenticated and the “Sign out of Google” button is shown  
+     When it is pressed  
+     Then the viewer is signed out, private playlists become unavailable, and the button label changes to “Authenticate with Google”.
+
+---
+
+_**User**_
+
+11 is wrong: we ALWAYS hide Recommendation strip as it is distracting. what you might have confused it with is "Given a video is playing, When it ended, Then I see the Recommendation **GRID** and the controls have disappeared" and "Given I am on Recommendation grid, when i press a tile representing a video, then the grid disappears and is replaced by the video, and the controls are visible, and the video is playing"
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Corrected interactions around the Recommendation Grid
+
+9. Video completion → Recommendation Grid  
+   Given a Video is playing and Controls are visible  
+   When the Video ends  
+   Then the Recommendation Grid appears, and Controls disappear.
+
+10. Select video from Recommendation Grid  
+   Given the Recommendation Grid is displayed and Controls are hidden  
+   When the viewer taps a Video tile on the Grid  
+   Then the Grid disappears, the selected Video begins playing, and Controls re-appear (Play toggle shows “Pause”).
+
+---
+
+_**User**_
+
+list all revised interactions
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Revised interaction catalogue (domain language, with control states)
+
+1. Play  
+   Given Controls are visible, the Video is paused, and the Play toggle shows “Play”  
+   When the viewer presses the Play toggle  
+   Then the Video plays and the Play toggle changes to “Pause”.
+
+2. Pause  
+   Given the Video is playing and the Play toggle shows “Pause”  
+   When the viewer presses the Play toggle  
+   Then the Video pauses and the Play toggle changes to “Play”.
+
+3. Next  
+   Given the Playlist has a next Video and the Next button is enabled  
+   When the viewer presses the Next button  
+   Then the next Video begins playing, Prev button becomes enabled, and the Next button is disabled if now at the last Video.
+
+4. Previous  
+   Given the Playlist has a previous Video and the Prev button is enabled  
+   When the viewer presses the Prev button  
+   Then the previous Video begins playing, Next button becomes enabled, and the Prev button is disabled if now at the first Video.
+
+5. Scrub (seek)  
+   Given Controls are visible and the Scrub bar shows current progress  
+   When the viewer drags the Scrub bar and releases at time T  
+   Then playback resumes from time T, and the Scrub bar thumb snaps to time T.
+
+6. Idle-fade  
+   Given Controls are fully visible (100 % opacity) while a Video is playing  
+   When 5 seconds pass with no viewer interaction  
+   Then Controls fade to 15 % opacity.
+
+7. Wake Controls  
+   Given Controls are faded (15 % opacity)  
+   When the viewer taps the screen or interacts with any control  
+   Then Controls return to 100 % opacity and the idle-fade timer restarts.
+
+8. Startup resume  
+   Given the app launches and a saved resume point exists for the first Video  
+   When the initial frame appears  
+   Then that Video is paused at the saved time, the Play toggle shows “Play”, and the Scrub bar reflects the saved position.
+
+9. Video completion → Recommendation Grid  
+   Given a Video is playing and Controls are visible  
+   When the Video ends  
+   Then the Recommendation Grid appears and Controls disappear.
+
+10. Select video from Recommendation Grid  
+    Given the Recommendation Grid is displayed and Controls are hidden  
+    When the viewer taps a Video tile  
+    Then the Grid disappears, the chosen Video starts playing, and Controls appear showing the Play toggle as “Pause”.
+
+11. Open Settings  
+    Given Controls are visible  
+    When the viewer presses the gear icon  
+    Then the Settings sheet opens and overlay controls behind it become inactive.
+
+12. Change Playlist  
+    Given the Settings sheet is open  
+    When the viewer enters a new playlist URL/ID and confirms  
+    Then the new Playlist loads, playback is positioned at the first Video (paused at 0 s), Prev button is disabled, and Next button is enabled.
+
+13. Google sign-in  
+    Given the viewer is not authenticated and the “Authenticate with Google” button is shown  
+    When the button is pressed and sign-in succeeds  
+    Then private playlists can be loaded and the button label changes to “Sign out of Google”.
+
+14. Google sign-out  
+    Given the viewer is authenticated and the “Sign out of Google” button is shown  
+    When the button is pressed  
+    Then the viewer is signed out, private playlists become unavailable, and the button label changes back to “Authenticate with Google”.
+
+---
+
+_**User**_
+
+write a new file specs/interactions.md. Include this interaction catalog and list of terms used, defining each. Place the definitions on top. this will be our reference spec for the app. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+- 
++ # Interaction Reference Spec
++ 
++ ## Domain Terms
++ 
++ * **Video** – a single YouTube video entity that can be played.
++ * **Playlist** – ordered collection of Videos provided by a YouTube playlist ID.
++ * **Controls** – on-screen playback UI (Play/Pause toggle, Prev, Next, Scrub bar, gear icon).
++ * **Play toggle** – button that alternates between "Play" and "Pause" icons/states.
++ * **Prev button** – skips to the previous Video; disabled at the first Video.
++ * **Next button** – skips to the next Video; disabled at the last Video.
++ * **Scrub bar** – slider that shows progress and allows seeking within the current Video.
++ * **Idle-fade** – automatic opacity reduction of Controls after inactivity.
++ * **Recommendation Grid** – 2×N grid of Video thumbnails shown after a Video ends.
++ * **Settings sheet** – modal view where the viewer can sign in/out and change the Playlist ID.
++ * **Viewer** – the end-user operating the app.
++ 
++ ---
++ 
++ ## Interaction Catalogue
++ 
++ 1. **Play**  
++    *Given* Controls are visible, the Video is paused, and the Play toggle shows "Play".  
++    *When* the viewer presses the Play toggle.  
++    *Then* the Video plays and the Play toggle changes to "Pause".
++ 
++ 2. **Pause**  
++    *Given* the Video is playing and the Play toggle shows "Pause".  
++    *When* the viewer presses the Play toggle.  
++    *Then* the Video pauses and the Play toggle changes to "Play".
++ 
++ 3. **Next**  
++    *Given* the Playlist has a next Video and the Next button is enabled.  
++    *When* the viewer presses the Next button.  
++    *Then* the next Video begins playing; Prev becomes enabled and Next may disable if now at the last Video.
++ 
++ 4. **Previous**  
++    *Given* the Playlist has a previous Video and the Prev button is enabled.  
++    *When* the viewer presses the Prev button.  
++    *Then* the previous Video begins playing; Next becomes enabled and Prev may disable if now at the first Video.
++ 
++ 5. **Scrub (seek)**  
++    *Given* Controls are visible and the Scrub bar shows current progress.  
++    *When* the viewer drags the Scrub bar and releases at time **T**.  
++    *Then* playback resumes from **T** and the Scrub bar thumb snaps to **T**.
++ 
++ 6. **Idle-fade**  
++    *Given* Controls are fully visible (100 % opacity) while a Video is playing.  
++    *When* 5 seconds pass with no viewer interaction.  
++    *Then* Controls fade to 15 % opacity.
++ 
++ 7. **Wake Controls**  
++    *Given* Controls are faded (15 % opacity).  
++    *When* the viewer taps the screen or interacts with any control.  
++    *Then* Controls return to 100 % opacity and the idle-fade timer restarts.
++ 
++ 8. **Startup resume**  
++    *Given* the app launches and a saved resume point exists for the first Video.  
++    *When* the initial frame appears.  
++    *Then* that Video is paused at the saved time; Play toggle shows "Play"; Scrub bar reflects the saved position.
++ 
++ 9. **Video completion → Recommendation Grid**  
++    *Given* a Video is playing and Controls are visible.  
++    *When* the Video ends.  
++    *Then* the Recommendation Grid appears and Controls disappear.
++ 
++ 10. **Select video from Recommendation Grid**  
++     *Given* the Recommendation Grid is displayed and Controls are hidden.  
++     *When* the viewer taps a Video tile.  
++     *Then* the Grid disappears, the chosen Video starts playing, and Controls appear showing the Play toggle as "Pause".
++ 
++ 11. **Open Settings**  
++     *Given* Controls are visible.  
++     *When* the viewer presses the gear icon.  
++     *Then* the Settings sheet opens and overlay controls behind it become inactive.
++ 
++ 12. **Change Playlist**  
++     *Given* the Settings sheet is open.  
++     *When* the viewer enters a new playlist URL/ID and confirms.  
++     *Then* the new Playlist loads; playback is positioned at the first Video (paused at 0 s); Prev is disabled and Next is enabled.
++ 
++ 13. **Google sign-in**  
++     *Given* the viewer is not authenticated and the "Authenticate with Google" button is shown.  
++     *When* the button is pressed and sign-in succeeds.  
++     *Then* private playlists can be loaded and the button label changes to "Sign out of Google".
++ 
++ 14. **Google sign-out**  
++     *Given* the viewer is authenticated and the "Sign out of Google" button is shown.  
++     *When* the button is pressed.  
++     *Then* the viewer is signed out, private playlists become unavailable, and the button label changes back to "Authenticate with Google". 
+```
+
+---
+
+Created `specs/interactions.md` containing:
+
+1. A “Domain Terms” glossary that defines every control and concept used.
+2. A numbered interaction catalogue in Given/When/Then form, updated with the corrected Recommendation-Grid behaviour and explicit control states.
+
+This file is now the authoritative reference spec for the app’s behaviour.
+
+---
+
+_**User**_
+
+do we need "Recommendation strip"? we mention it because we want to always hide it. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+No.  
+“Recommendation strip” isn’t part of the UI anymore—only the full-screen Recommendation Grid that replaces the video when it ends. We can drop the term entirely from the glossary and interactions.
+
+---
+
+_**User**_
+
+how do we express the situation where the player pops it up, and because we don't want to show it, we must do something to hide it?
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Express it as a system-driven rule in the same Given / When / Then format, with “System” as the actor:
+
+End-screen suggestion suppression  
+Given the YouTube player surfaces its own end-screen suggestion overlay  
+When the overlay becomes visible  
+Then the System hides it immediately (covers it with a black layer and disables touches) so the viewer never sees the platform suggestions.
+
+---
+
+_**User**_
+
+also we need to be explicit about which are of the screen respond to touch, and which do not, as a function of interaction. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Touch-responsiveness matrix
+
+Screen regions  
+A. Controls overlay (buttons + scrub)  
+B. Video surface (everything behind overlays)  
+C. Recommendation Grid  
+D. Settings sheet
+
+Playback states vs. touch
+
+1. Video playing / Controls visible  
+   • A responds to taps and drags  
+   • B does NOT respond (blocked by transparent layer)  
+
+2. Video playing / Controls faded  
+   • A still responds  
+   • B does NOT respond  
+
+3. Idle-tap while Controls faded  
+   • Tap in B → wakes Controls (no other action)
+
+4. Scrubbing  
+   • A (scrub bar) captures drag; B remains blocked
+
+5. Video ended (Recommendation Grid shown)  
+   • C responds to taps (tile selection)  
+   • A & B do NOT respond
+
+6. Settings sheet open  
+   • D responds (normal sheet)  
+   • Everything beneath (A, B, C) is inert
+
+End-screen suppression rule  
+Given the embedded YouTube player shows its own end-screen suggestions  
+When that overlay appears  
+Then the system immediately covers it with a non-interactive layer, so region B never becomes touchable and suggestions stay hidden.
+
+---
+
+_**User**_
+
+how do we add this to our specs? does it make to put it in a separate .md file? propose its name
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Best to keep the interaction catalogue focused on behavioural flows and move detailed hit-testing rules to a separate file.
+
+Proposed file:  
+`specs/touch_map.md`
+
+Contents would include:  
+• Definitions of screen regions (A–D)  
+• A state-by-state table listing which regions accept touch  
+• The end-screen-suppression rule.
+
+---
+
+_**User**_
+
+create it. do not use unnecessary words. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+- 
++ # Touch Map
++ 
++ ## Screen regions
++ A Controls overlay (buttons, scrub)
++ B Video surface (behind overlays)
++ C Recommendation Grid
++ D Settings sheet
++ 
++ ## Touch rules
++ 1. Playing — controls visible  
++    A active  B blocked
++ 
++ 2. Playing — controls faded  
++    A active  B blocked (tap wakes controls)
++ 
++ 3. Scrubbing  
++    A (scrub) handles drag  B blocked
++ 
++ 4. Video ended — Grid shown  
++    C active  A, B blocked
++ 
++ 5. Settings sheet open  
++    D active  A, B, C blocked
++ 
++ ## End-screen suppression
++ When the embedded YouTube end-screen overlay appears the system immediately covers it; region B never becomes touchable. 
+```
+
+---
+
+Created `specs/touch_map.md` with:
+
+• Region definitions (A–D)  
+• Compact state-by-state touch rules  
+• End-screen suppression rule.
+
+This complements `specs/interactions.md` as a precise hit-testing reference.
+
+---
+
+_**User**_
+
+this is wrong:
+
+## End-screen suppression
+When the embedded YouTube end-screen overlay appears the system immediately covers it; region B never becomes touchable. 
+
+we suppress Recommendation Strip that shows up on pause, NOT end-screen Recommendation Grid. we decided not to use explicit name for the strip and instantly ran into confusion. review with this in mind.
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+     D active  A, B, C blocked
+  
+- ## End-screen suppression
+- When the embedded YouTube end-screen overlay appears the system immediately covers it; region B never becomes touchable. 
++ ## Pause-suggestion suppression
++ When the YouTube player surfaces its on-pause suggestion strip the system instantly covers it; region B remains blocked and the strip is not visible. 
+```
+
+---
+
+Updated `specs/touch_map.md`:
+
+The final section now reads “Pause-suggestion suppression” and clarifies that we block the on-pause suggestion strip (not our own end-of-video Recommendation Grid).
+
+---
+
+_**User**_
+
+we still need the rule for Recommendation grid: when it comes up, we want to treat controls like this: play toggle in Play and disabled (i have not chosen what video to play), nav buttons have the same state as when the video was playing. the grid is touchable so the user could pick a new video by touching its tile. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+  
+  4. Video ended — Grid shown  
+-    C active  A, B blocked
++    • Touch: C active  A, B blocked  
++    • Controls state: Play toggle shows "Play" and is disabled; Prev/Next buttons keep the enabled/disabled state they had just before the Video ended.
+  
+  5. Settings sheet open  
+```
+
+---
+
+Added control-state details to scenario “Video ended — Grid shown” in `specs/touch_map.md`:
+
+• Touch: C active, A & B blocked  
+• Controls state: Play toggle shows “Play” (disabled), Prev/Next retain their previous enabled/disabled status.
+
+---
+
+_**User**_
+
+B (enabled subset of controls) is active: i might want to skip the grid and go to the next/prev video in playlist. 
+
+this is incorrect
+4. Video ended — Grid shown  
+   • Touch: C active  A, B blocked 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+  
+  4. Video ended — Grid shown  
+-    • Touch: C active  A, B blocked  
+-    • Controls state: Play toggle shows "Play" and is disabled; Prev/Next buttons keep the enabled/disabled state they had just before the Video ended.
++    • Touch:  
++       – C active (tap tile chooses Video)  
++       – B active for Prev / Next actions  
++       – A blocked  
++    • Controls state: Play toggle shows "Play" (disabled), Prev/Next keep their enabled/disabled state.
+  
+  5. Settings sheet open  
+```
+
+---
+
+Updated “Video ended — Grid shown” rule:
+
+• Touch – C active (Grid), B active for Prev/Next actions, A blocked.  
+• Controls – Play toggle shows “Play” (disabled); Prev/Next retain their prior enabled state.
+
+---
+
+_**User**_
+
+use more intuitive designations: instead of A (Conrtrol Overlay) use CO, instead of B use VS, etc. 
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+  
+  ## Screen regions
+- A Controls overlay (buttons, scrub)
+- B Video surface (behind overlays)
+- C Recommendation Grid
+- D Settings sheet
++ CO Controls overlay (buttons, scrub)
++ VS Video surface (behind overlays)
++ RG Recommendation Grid
++ SS Settings sheet
+  
+  ## Touch rules
+  1. Playing — controls visible  
+-    A active  B blocked
++    CO active  VS blocked
+  
+  2. Playing — controls faded  
+-    A active  B blocked (tap wakes controls)
++    CO active  VS blocked (tap wakes controls)
+  
+  3. Scrubbing  
+-    A (scrub) handles drag  B blocked
++    CO (scrub) handles drag  VS blocked
+  
+  4. Video ended — Grid shown  
+     • Touch:  
+-       – C active (tap tile chooses Video)  
+-       – B active for Prev / Next actions  
+-       – A blocked  
++       – RG active (tap tile chooses Video)  
++       – VS active for Prev / Next actions  
++       – CO blocked  
+     • Controls state: Play toggle shows "Play" (disabled), Prev/Next keep their enabled/disabled state.
+  
+  5. Settings sheet open  
+-    D active  A, B, C blocked
++    SS active  CO, VS, RG blocked
+  
+  ## Pause-suggestion suppression
+- When the YouTube player surfaces its on-pause suggestion strip the system instantly covers it; region B remains blocked and the strip is not visible. 
++ When the YouTube player surfaces its on-pause suggestion strip the system instantly covers it; region VS remains blocked and the strip is not visible. 
+  
+```
+
+---
+
+`specs/touch_map.md` now uses intuitive region codes:
+
+CO  Controls overlay  
+VS  Video surface  
+RG  Recommendation Grid  
+SS  Settings sheet
+
+All touch rules and the suppression note updated accordingly.
+
+---
+
+_**User**_
+
+      – CO blocked  
+this is wrong: if i touch back or forward, i expect to go to the previous or next video (if playlist has one, else the respective button is disabled)
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+```diff
+        – RG active (tap tile chooses Video)  
+        – VS active for Prev / Next actions  
+-       – CO blocked  
++       – CO active for Prev / Next buttons  
++       – VS blocked  
+     • Controls state: Play toggle shows "Play" (disabled), Prev/Next keep their enabled/disabled state.
+  
+```
+
+---
+
+Adjusted the “Video ended — Grid shown” rule:
+
+• Touch: RG active; CO active for Prev/Next buttons; VS blocked.  
+• Play toggle remains disabled; Prev/Next keep their usual enablement.
+
+---
+
+_**User**_
+
+explain "      – VS active for Prev / Next actions  "
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+That line was obsolete—`Prev` / `Next` are buttons in the Controls Overlay (CO), not in the Video Surface (VS).  
+The corrected rule now states:
+
+• RG active (tap tile chooses Video)  
+• CO active for Prev / Next buttons  
+• VS blocked
+
+So VS receives no touches while the Recommendation Grid is on-screen.
+
+---
+
+_**User**_
+
+not reflected in touch_map.md. read it and ensure all rules are CORRECT and do not contradict each other. update if any changes needed.
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+Read file: specs/touch_map.md
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+<details>
+            <summary>Grep search for "VS active for Prev" • **2** files</summary>
+        
+| File | Line | Match |
+|------|------|-------|
+| `file:///Users/vlad/dev/ai/AgentFarm/ptube/specs/touch_map.md` | L21 | `– VS active for Prev / Next actions` |
+| `file:///Users/vlad/dev/ai/AgentFarm/ptube/specs/touch_map.md` | L21 | `– VS active for Prev / Next actions` |
+
+</details>
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+
+
+---
+
+Read file: specs/touch_map.md
 
 ---
 

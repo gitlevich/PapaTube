@@ -16,16 +16,16 @@
 		8CD60132DFB9C0492ED1B9E6 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */; };
 		999999999999999999999999 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888888888888888888888888 /* SettingsSheet.swift */; };
 		A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDADC268B67BDB4082084C18 /* Collection+Safe.swift */; };
+		AA111111111111111111111111 /* RecommendationGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA222222222222222222222222 /* RecommendationGrid.swift */; };
 		C1DE9CD1504D6734B451AF18 /* PapaTubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059557B547534300B254B780 /* PapaTubeApp.swift */; };
 		D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CD7597F06529525CE5528 /* PlayerScreen.swift */; };
 		EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */; };
+		F544CDD02E09F0E600BE2079 /* interactions.md in Resources */ = {isa = PBXBuildFile; fileRef = F544CDCF2E09F0E600BE2079 /* interactions.md */; };
+		F544CDD22E09F26500BE2079 /* touch_map.md in Resources */ = {isa = PBXBuildFile; fileRef = F544CDD12E09F26500BE2079 /* touch_map.md */; };
 		F56863382E08EB1F00067D6E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F56863372E08EB1F00067D6E /* GoogleSignIn */; };
 		F568633A2E08EB1F00067D6E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F56863392E08EB1F00067D6E /* GoogleSignInSwift */; };
-		F568634F2E0936FB00067D6E /* player_behaviour.md in Resources */ = {isa = PBXBuildFile; fileRef = F568634D2E0936FB00067D6E /* player_behaviour.md */; };
-		F56863512E09388100067D6E /* terminology.md in Resources */ = {isa = PBXBuildFile; fileRef = F56863502E09388100067D6E /* terminology.md */; };
 		F57FB0682E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
 		F57FB0692E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
-		AA111111111111111111111111 /* RecommendationGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA222222222222222222222222 /* RecommendationGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,16 +47,16 @@
 		666666666666666666666666 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		85B694751FCBC9011C761A45 /* PapaTubeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaTubeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		888888888888888888888888 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
+		AA222222222222222222222222 /* RecommendationGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationGrid.swift; sourceTree = "<group>"; };
 		CB42F1E639BD87E58117B048 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		DCC1930077BED55418E0626D /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		EF175A34ED43A295FD3C0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F544CDCF2E09F0E600BE2079 /* interactions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = interactions.md; sourceTree = "<group>"; };
+		F544CDD12E09F26500BE2079 /* touch_map.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = touch_map.md; sourceTree = "<group>"; };
 		F56863412E091FEF00067D6E /* PapaTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PapaTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F568634D2E0936FB00067D6E /* player_behaviour.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = player_behaviour.md; sourceTree = "<group>"; };
-		F56863502E09388100067D6E /* terminology.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = terminology.md; sourceTree = "<group>"; };
 		F57FB0672E09CA3D00E337DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
-		AA222222222222222222222222 /* RecommendationGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -168,8 +168,8 @@
 		F568634E2E0936FB00067D6E /* specs */ = {
 			isa = PBXGroup;
 			children = (
-				F56863502E09388100067D6E /* terminology.md */,
-				F568634D2E0936FB00067D6E /* player_behaviour.md */,
+				F544CDD12E09F26500BE2079 /* touch_map.md */,
+				F544CDCF2E09F0E600BE2079 /* interactions.md */,
 			);
 			path = specs;
 			sourceTree = "<group>";
@@ -277,9 +277,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A64F50FAA27FD6A8D1B3295 /* LaunchScreen.storyboard in Resources */,
-				F568634F2E0936FB00067D6E /* player_behaviour.md in Resources */,
-				F56863512E09388100067D6E /* terminology.md in Resources */,
 				F57FB0682E09CA3D00E337DD /* Assets.xcassets in Resources */,
+				F544CDD02E09F0E600BE2079 /* interactions.md in Resources */,
+				F544CDD22E09F26500BE2079 /* touch_map.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
