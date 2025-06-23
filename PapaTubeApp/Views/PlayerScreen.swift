@@ -21,17 +21,17 @@ struct PlayerScreen: View {
     @State private var fadeWork: DispatchWorkItem?
 
     @EnvironmentObject var app: AppModel
-    private var playlistService: YouTubePlaylistService { app.playlistService }
+    private var playlistStore: PlaylistStore { app.playlistStore }
     private var player: YouTubePlayer { app.player }
-    private var playbackStateStore: PlaybackStateStore { app.playbackStore }
 
     var body: some View {
         ZStack {
-            if playlistService.videos.indices.contains(app.currentIndex) {
+            if playlistStore.videos.indices.contains(app.currentIndex) {
                 VideoPlayerView(player: player)
-                    .allowsHitTesting(false)
+                    // Disable touches during normal playback, re-enable when the YouTube end-screen grid appears.
+                    .allowsHitTesting(app.isEnded)
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                        playbackStateStore.save()
+                        app.save()
                         Task { try? await player.pause() }
                     }
             } else {
@@ -47,6 +47,22 @@ struct PlayerScreen: View {
             if controlsVisible {
                 controlsOverlay
                     .zIndex(2)
+            }
+
+            // Recommendation grid overlay shown when current video finished.
+            if app.isEnded {
+                RecommendationGrid(
+                    videos: recommendationVideos,
+                    onSelect: { video in
+                        if let idx = playlistStore.videos.firstIndex(of: video) {
+                            // Load selected video and start playing immediately.
+                            app.isEnded = false
+                            app.load(index: idx)
+                            app.togglePlayPause()
+                        }
+                    })
+                    .transition(.opacity)
+                    .zIndex(3)
             }
 
             // Block touches outside controls only during normal playback
@@ -81,7 +97,7 @@ struct PlayerScreen: View {
             loadCurrent()
         }
         .onChange(of: app.playlist) { _ in
-            if app.currentIndex >= playlistService.videos.count {
+            if app.currentIndex >= playlistStore.videos.count {
                 app.load(index: 0)
             } else {
                 loadCurrent()
@@ -92,8 +108,19 @@ struct PlayerScreen: View {
             .eraseToAnyPublisher()) { seconds in
             if !isScrubbing {
                 currentTime = seconds
-                if let video = playlistService.videos[safe: app.currentIndex] {
-                    playbackStateStore.updatePosition(for: video.id, seconds: seconds)
+                if let video = playlistStore.videos[safe: app.currentIndex] {
+                    app.updatePosition(for: video.id, seconds: seconds)
+                }
+                // Fallback end-of-video detection – some videos don't emit `.ended`.
+                // When we are within the last 0.5 s of the total duration mark the video as ended
+                // so that the recommendation grid becomes interactive and the overlay hides.
+                if duration > 1, seconds >= duration - 0.5 {
+                    if !app.isEnded {
+                        app.isEnded = true
+                    }
+                } else if app.isEnded {
+                    // Reset flag if user scrubbed backwards or a new video started
+                    app.isEnded = false
                 }
             }
         }
@@ -102,10 +129,18 @@ struct PlayerScreen: View {
             .eraseToAnyPublisher()) { dur in
                 duration = max(dur, 1)
         }
+        .onReceive(player.playbackStatePublisher) { state in
+            switch state {
+            case .ended:
+                app.isEnded = true
+            default:
+                break
+            }
+        }
         .onChange(of: app.isPlaying) { playing in
             if playing {
-                if let video = playlistService.videos[safe: app.currentIndex] {
-                    playbackStateStore.updatePlaying(for: video.id, isPlaying: true)
+                if let video = playlistStore.videos[safe: app.currentIndex] {
+                    app.updatePlaying(for: video.id, isPlaying: true)
                 }
                 extraBottom = 0
                 controlsLocked = false
@@ -117,8 +152,8 @@ struct PlayerScreen: View {
                     withAnimation { isPausedOverlayVisible = false }
                 }
             } else {
-                if let video = playlistService.videos[safe: app.currentIndex] {
-                    playbackStateStore.updatePlaying(for: video.id, isPlaying: false)
+                if let video = playlistStore.videos[safe: app.currentIndex] {
+                    app.updatePlaying(for: video.id, isPlaying: false)
                 }
                 fadeWork?.cancel()
                 withAnimation { buttonOpacity = 1 }
@@ -139,6 +174,11 @@ struct PlayerScreen: View {
                 scheduleButtonFade()
             }
         }
+    }
+
+    // Precomputed list for recommendation grid (skip current video)
+    private var recommendationVideos: [Video] {
+        playlistStore.videos.enumerated().filter { $0.offset != app.currentIndex }.map { $0.element }
     }
 
     private var controlsOverlay: some View {
@@ -169,7 +209,7 @@ struct PlayerScreen: View {
             }
 
             let atStart = (app.currentIndex == 0)
-            let atEnd   = (app.currentIndex >= max(0, playlistService.videos.count - 1)) && !playlistService.videos.isEmpty
+            let atEnd   = (app.currentIndex >= max(0, playlistStore.videos.count - 1)) && !playlistStore.videos.isEmpty
 
             // Control buttons (fade separately)
             HStack(spacing: 40) {
@@ -212,10 +252,10 @@ struct PlayerScreen: View {
     }
 
     private func loadCurrent() {
-        guard playlistService.videos.indices.contains(app.currentIndex) else { return }
-        let video = playlistService.videos[app.currentIndex]
+        guard playlistStore.videos.indices.contains(app.currentIndex) else { return }
+        let video = playlistStore.videos[app.currentIndex]
         // Configure resume point before we hand off to the FSM for actual loading.
-        if let resume = playbackStateStore.positions[video.id], resume > 2 {
+        if let resume = app.positions[video.id], resume > 2 {
             var params = player.parameters
             params.startTime = Measurement(value: resume, unit: UnitDuration.seconds)
             player.parameters = params

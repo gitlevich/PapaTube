@@ -9,8 +9,8 @@ struct SettingsSheet: View {
         NavigationView {
             List {
                 TextField("YouTube playlist URL or ID", text: $draftID, onCommit: {
-                    app.playlistService.setPlaylistInput(draftID)
-                    draftID = app.playlistService.playlistID
+                    app.playlistStore.setPlaylistInput(draftID)
+                    draftID = app.playlistStore.playlistID
                     app.refreshPlaylist()
                     // Auto-close settings once videos arrive
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {      
@@ -37,7 +37,7 @@ struct SettingsSheet: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
-            draftID = app.playlistService.playlistID
+            draftID = app.playlistStore.playlistID
         }
     }
 
@@ -57,8 +57,8 @@ struct SettingsSheet: View {
         pendingWork?.cancel()
         let work = DispatchWorkItem { [text] in
             guard !text.isEmpty else { return }
-            app.playlistService.setPlaylistInput(text)
-            draftID = app.playlistService.playlistID
+            app.playlistStore.setPlaylistInput(text)
+            draftID = app.playlistStore.playlistID
             app.refreshPlaylist()
         }
         pendingWork = work

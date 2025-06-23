@@ -6,8 +6,7 @@ import YouTubePlayerKit
 @MainActor
 final class AppModel: ObservableObject {
     // MARK: - Sub-objects
-    let playlistService = YouTubePlaylistService()
-    let playbackStore   = PlaybackStateStore()
+    let playlistStore = PlaylistStore()
     let player: YouTubePlayer
 
     // MARK: - Published UI state
@@ -16,7 +15,16 @@ final class AppModel: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var isEnded: Bool = false
 
+    // Persisted playback info
+    @Published var positions: [String: Double] = [:] // videoId : seconds
+    @Published var playingStates: [String: Bool] = [:] // videoId : wasPlaying
+
     private var bag = Set<AnyCancellable>()
+
+    private let defaults = UserDefaults.standard
+    private let keyPositions = "positions"
+    private let keyPlaying = "playingStates"
+    private let keyIndex = "currentIndex"
 
     init() {
         player = YouTubePlayer(
@@ -26,8 +34,19 @@ final class AppModel: ObservableObject {
                               showFullscreenButton: false,
                               showCaptions: false))
 
+        // Load persisted state
+        currentIndex = defaults.integer(forKey: keyIndex)
+        if let data = defaults.data(forKey: keyPositions),
+           let dict = try? JSONDecoder().decode([String: Double].self, from: data) {
+            positions = dict
+        }
+        if let data = defaults.data(forKey: keyPlaying),
+           let dict = try? JSONDecoder().decode([String: Bool].self, from: data) {
+            playingStates = dict
+        }
+
         // Relay playlist updates.
-        playlistService.$state
+        playlistStore.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] st in
                 guard let self else { return }
@@ -42,7 +61,7 @@ final class AppModel: ObservableObject {
             .store(in: &bag)
 
         // Start with cached/remote playlist.
-        Task { await playlistService.refresh() }
+        Task { await playlistStore.refresh() }
 
         // Keep isPlaying in sync with actual player callbacks.
         player.playbackStatePublisher
@@ -104,8 +123,27 @@ final class AppModel: ObservableObject {
         load(index: max(currentIndex - 1, 0))
     }
 
-    func refreshPlaylist() { Task { await playlistService.refresh() } }
+    func refreshPlaylist() { Task { await playlistStore.refresh() } }
+
+    // MARK: - Playback state helpers
+    func updatePosition(for videoID: String, seconds: Double) {
+        positions[videoID] = seconds
+        save()
+    }
+
+    func updatePlaying(for videoID: String, isPlaying: Bool) {
+        playingStates[videoID] = isPlaying
+        save()
+    }
 
     // Persist when app backgrounds.
-    func save() { playbackStore.save() }
+    func save() {
+        defaults.set(currentIndex, forKey: keyIndex)
+        if let data = try? JSONEncoder().encode(positions) {
+            defaults.set(data, forKey: keyPositions)
+        }
+        if let data = try? JSONEncoder().encode(playingStates) {
+            defaults.set(data, forKey: keyPlaying)
+        }
+    }
 } 

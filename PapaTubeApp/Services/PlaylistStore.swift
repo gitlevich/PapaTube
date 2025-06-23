@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 @MainActor
-final class YouTubePlaylistService: ObservableObject {
+final class PlaylistStore: ObservableObject {
 
     enum PlaylistState: Equatable {
         case idle
