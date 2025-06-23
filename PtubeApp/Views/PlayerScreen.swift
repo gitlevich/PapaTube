@@ -23,12 +23,11 @@ struct PlayerScreen: View {
     @EnvironmentObject var app: AppModel
     private var playlistService: YouTubePlaylistService { app.playlistService }
     private var player: YouTubePlayer { app.player }
-    private var fsm: PlaybackStateMachine { app.fsm }
     private var playbackStateStore: PlaybackStateStore { app.playbackStore }
 
     var body: some View {
         ZStack {
-            if playlistService.videos.indices.contains(fsm.currentIndex) {
+            if playlistService.videos.indices.contains(app.currentIndex) {
                 VideoPlayerView(player: player)
                     .allowsHitTesting(false)
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
@@ -65,14 +64,19 @@ struct PlayerScreen: View {
         }
         .onAppear {
             app.refreshPlaylist()
-            fsm.load(index: fsm.currentIndex)
+            if !app.playlist.isEmpty {
+                app.load(index: app.currentIndex)
+            }
         }
-        .onChange(of: fsm.currentIndex) { _ in
+        .onChange(of: app.currentIndex) { _ in
+            // User navigated to a different video – show controls fully then fade again
+            buttonOpacity = 1
+            scheduleButtonFade()
             loadCurrent()
         }
         .onChange(of: app.playlist) { _ in
-            if fsm.currentIndex >= playlistService.videos.count {
-                fsm.load(index: 0)
+            if app.currentIndex >= playlistService.videos.count {
+                app.load(index: 0)
             } else {
                 loadCurrent()
             }
@@ -82,7 +86,7 @@ struct PlayerScreen: View {
             .eraseToAnyPublisher()) { seconds in
             if !isScrubbing {
                 currentTime = seconds
-                if let video = playlistService.videos[safe: fsm.currentIndex] {
+                if let video = playlistService.videos[safe: app.currentIndex] {
                     playbackStateStore.updatePosition(for: video.id, seconds: seconds)
                 }
             }
@@ -92,10 +96,9 @@ struct PlayerScreen: View {
             .eraseToAnyPublisher()) { dur in
                 duration = max(dur, 1)
         }
-        .onChange(of: fsm.mode) { newMode in
-            switch newMode {
-            case .playing:
-                if let video = playlistService.videos[safe: fsm.currentIndex] {
+        .onChange(of: app.isPlaying) { playing in
+            if playing {
+                if let video = playlistService.videos[safe: app.currentIndex] {
                     playbackStateStore.updatePlaying(for: video.id, isPlaying: true)
                 }
                 extraBottom = 0
@@ -103,27 +106,13 @@ struct PlayerScreen: View {
                 buttonOpacity = 1
                 scheduleButtonFade()
                 isPausedOverlayVisible = false
-            case .paused, .idle, .loading:
-                if let video = playlistService.videos[safe: fsm.currentIndex] {
+            } else {
+                if let video = playlistService.videos[safe: app.currentIndex] {
                     playbackStateStore.updatePlaying(for: video.id, isPlaying: false)
                 }
                 fadeWork?.cancel()
                 withAnimation { buttonOpacity = 1 }
-                if case .paused = newMode {
-                    isPausedOverlayVisible = true
-                } else {
-                    isPausedOverlayVisible = false
-                }
-            case .ended:
-                if fsm.currentIndex < playlistService.videos.count - 1 {
-                    fsm.next()
-                } else {
-                    controlsVisible = true
-                    controlsLocked = true
-                    extraBottom = 120
-                }
-                withAnimation { buttonOpacity = 1 }
-                isPausedOverlayVisible = false
+                isPausedOverlayVisible = true
             }
         }
     }
@@ -140,7 +129,7 @@ struct PlayerScreen: View {
             }
             Spacer()
 
-            // Scrub bar
+            // Scrub bar – fades together with buttons
             if duration > 1 {
                 Slider(value: Binding(get: { currentTime }, set: { newVal in
                     currentTime = newVal
@@ -155,11 +144,12 @@ struct PlayerScreen: View {
                 .padding(.horizontal)
             }
 
-            let atStart = fsm.atStart
-            let atEnd   = fsm.atEnd && !playlistService.videos.isEmpty
+            let atStart = (app.currentIndex == 0)
+            let atEnd   = (app.currentIndex >= max(0, playlistService.videos.count - 1)) && !playlistService.videos.isEmpty
 
+            // Control buttons (fade separately)
             HStack(spacing: 40) {
-                Button(action: { fsm.prev() }) {
+                Button(action: { app.prev() }) {
                     Image(systemName: "backward.end")
                         .font(.system(size: buttonSize, weight: .heavy))
                 }
@@ -167,12 +157,12 @@ struct PlayerScreen: View {
                 .opacity(atStart ? 0.3 : 1.0)
                 .disabled(atStart)
 
-                Button(action: { fsm.togglePlayPause() }) {
-                    Image(systemName: fsm.isPlaying ? "pause" : "play")
+                Button(action: { app.togglePlayPause() }) {
+                    Image(systemName: app.isPlaying ? "pause" : "play")
                         .font(.system(size: buttonSize, weight: .heavy))
                 }.buttonStyle(.plain)
 
-                Button(action: { fsm.next() }) {
+                Button(action: { app.next() }) {
                     Image(systemName: "forward.end")
                         .font(.system(size: buttonSize, weight: .heavy))
                 }
@@ -182,8 +172,9 @@ struct PlayerScreen: View {
             }
             .padding(.bottom, 32 + extraBottom)
         }
+        .opacity(buttonOpacity) // fade entire overlay (slider + buttons)
         .shadow(radius: 4)
-        .foregroundColor(Color.white.opacity(buttonOpacity))
+        .foregroundColor(Color.white)
     }
 
     private func scheduleButtonFade() {
@@ -196,8 +187,8 @@ struct PlayerScreen: View {
     }
 
     private func loadCurrent() {
-        guard playlistService.videos.indices.contains(fsm.currentIndex) else { return }
-        let video = playlistService.videos[fsm.currentIndex]
+        guard playlistService.videos.indices.contains(app.currentIndex) else { return }
+        let video = playlistService.videos[app.currentIndex]
         // Configure resume point before we hand off to the FSM for actual loading.
         if let resume = playbackStateStore.positions[video.id], resume > 2 {
             var params = player.parameters
@@ -209,7 +200,7 @@ struct PlayerScreen: View {
             player.parameters = params
         }
 
-        fsm.load(index: fsm.currentIndex)
+        app.load(index: app.currentIndex)
     }
 }
 

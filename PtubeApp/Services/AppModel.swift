@@ -2,17 +2,18 @@ import SwiftUI
 import Combine
 import YouTubePlayerKit
 
-/// Root state container – owns playlist fetching, playback state persistence and the FSM.
+/// Root state container – owns playlist fetching and simple playback control (no FSM).
 @MainActor
 final class AppModel: ObservableObject {
     // MARK: - Sub-objects
     let playlistService = YouTubePlaylistService()
-    let playbackStore = PlaybackStateStore()
+    let playbackStore   = PlaybackStateStore()
     let player: YouTubePlayer
-    let fsm: PlaybackStateMachine
 
-    // Surface playlist so views can simply observe one property.
+    // MARK: - Published UI state
     @Published private(set) var playlist: [Video] = []
+    @Published var currentIndex: Int = 0
+    @Published var isPlaying: Bool = false
 
     private var bag = Set<AnyCancellable>()
 
@@ -24,14 +25,17 @@ final class AppModel: ObservableObject {
                               showFullscreenButton: false,
                               showCaptions: false))
 
-        fsm = PlaybackStateMachine(playlist: playlistService, player: player)
-
         // Relay playlist updates.
         playlistService.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] st in
+                guard let self else { return }
                 if case let .loaded(vids) = st {
-                    self?.playlist = vids
+                    playlist = vids
+                    // Auto-start first video when playlist appears.
+                    if !vids.isEmpty {
+                        load(index: 0)
+                    }
                 }
             }
             .store(in: &bag)
@@ -40,10 +44,46 @@ final class AppModel: ObservableObject {
         Task { await playlistService.refresh() }
     }
 
-    // MARK: - User intents (simply forward)
-    func next()  { fsm.next() }
-    func prev()  { fsm.prev() }
-    func togglePlayPause() { fsm.togglePlayPause() }
+    // MARK: - Controls
+    private func play() {
+        isPlaying = true
+        Task { try? await player.play() }
+    }
+
+    private func pause() {
+        isPlaying = false
+        Task { try? await player.pause() }
+    }
+
+    func togglePlayPause() {
+        isPlaying ? pause() : play()
+    }
+
+    func load(index: Int) {
+        guard playlist.indices.contains(index) else { return }
+        currentIndex = index
+
+        let id = playlist[index].id
+        Task {
+            _ = try? await player.load(source: .video(id: id))
+            if isPlaying {
+                try? await player.play()
+            } else {
+                try? await player.pause()
+            }
+        }
+    }
+
+    func next() {
+        guard !playlist.isEmpty else { return }
+        load(index: min(currentIndex + 1, playlist.count - 1))
+    }
+
+    func prev() {
+        guard !playlist.isEmpty else { return }
+        load(index: max(currentIndex - 1, 0))
+    }
+
     func refreshPlaylist() { Task { await playlistService.refresh() } }
 
     // Persist when app backgrounds.
