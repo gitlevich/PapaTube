@@ -14,6 +14,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var playlist: [Video] = []
     @Published var currentIndex: Int = 0
     @Published var isPlaying: Bool = false
+    @Published var isEnded: Bool = false
 
     private var bag = Set<AnyCancellable>()
 
@@ -42,6 +43,25 @@ final class AppModel: ObservableObject {
 
         // Start with cached/remote playlist.
         Task { await playlistService.refresh() }
+
+        // Keep isPlaying in sync with actual player callbacks.
+        player.playbackStatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                switch state {
+                case .playing:
+                    self?.isPlaying = true
+                    self?.isEnded = false
+                case .ended:
+                    self?.isPlaying = false
+                    self?.isEnded = true
+                case .paused, .buffering, .unstarted:
+                    self?.isPlaying = false
+                default:
+                    break
+                }
+            }
+            .store(in: &bag)
     }
 
     // MARK: - Controls

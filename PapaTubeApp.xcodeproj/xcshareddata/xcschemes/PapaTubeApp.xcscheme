@@ -17,7 +17,7 @@
                BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
                BuildableName = "PapaTubeApp.app"
                BlueprintName = "PapaTubeApp"
-               ReferencedContainer = "container:PtubeApp.xcodeproj">
+               ReferencedContainer = "container:PapaTubeApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,7 +33,7 @@
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
             BuildableName = "PapaTubeApp.app"
             BlueprintName = "PapaTubeApp"
-            ReferencedContainer = "container:PtubeApp.xcodeproj">
+            ReferencedContainer = "container:PapaTubeApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "F56863402E091FEF00067D6E"
                BuildableName = "PapaTubeTests.xctest"
                BlueprintName = "PapaTubeTests"
-               ReferencedContainer = "container:PtubeApp.xcodeproj">
+               ReferencedContainer = "container:PapaTubeApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
             BuildableName = "PapaTubeApp.app"
             BlueprintName = "PapaTubeApp"
-            ReferencedContainer = "container:PtubeApp.xcodeproj">
+            ReferencedContainer = "container:PapaTubeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -84,7 +84,7 @@
             BlueprintIdentifier = "F1F2498E4CEB382FED46AB53"
             BuildableName = "PapaTubeApp.app"
             BlueprintName = "PapaTubeApp"
-            ReferencedContainer = "container:PtubeApp.xcodeproj">
+            ReferencedContainer = "container:PapaTubeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,11 +1,17 @@
 # Player Behaviour Specification
 
-## Entities
+## Terms
 - **Player** – Embedded YouTube surface that renders video frames.
-- **Controls** – Custom overlay that includes Play toggle, Next, Prev and Scrub bar.
-- **Play toggle** – Round button showing ► when stopped and ❚❚ when playing.
+- **Play toggle** (pt) – Round button showing ► when stopped and ❚❚ when playing. Reflects the state of current video.
 - **Idle-fade** – Automatic reduction of Controls' opacity to 15 % after 5 s of inactivity.
 - **Startup snapshot** – First frame of the last-viewed video shown on app launch.
+- **Current Video** (cv) - The video the user is looking at.
+- **Navigation Buttons** (nav) - Buttons navigating the user from current video to previous: prev and next
+- **More videos bar** (video bar) - a recommended video bar that the player pops from the screen bottom on pause. we want it hidden at all times.
+- **Scrub bar** - the player's transport control, to scrub the video. 
+- **Controls** – Custom overlay that includes Play toggle, Next, Prev, Settings and Scrub bar.
+- **Recommendation Grid** - the grid with video tiles displayed after a video ends. 
+
 
 ## Rules
 
@@ -15,6 +21,7 @@
 | R-1.1 | Player displays Startup snapshot. |
 | R-1.2 | Playback is paused. |
 | R-1.3 | Play toggle shows ►. |
+| R-1.4 | Video bar is hidden. |
 
 ### 2. Play / Pause
 | ID | Description |
@@ -25,8 +32,8 @@
 ### 3. Navigation (Next / Prev)
 | ID | Description |
 |----|-------------|
-| R-3.1 | If playing, Next/Prev loads target video and auto-plays it. |
-| R-3.2 | If paused, Next/Prev loads target video but leaves it paused. |
+| R-3.1 | Next/Prev loads target video. it is displayed stopped. |
+| R-3.2 | If previoius video was playing, Play toggle toggles from pause to play, else it remains on pause. |
 | R-3.3 | Prev is disabled on first video; Next is disabled on last video. |
 
 ### 4. Controls Visibility
@@ -34,7 +41,7 @@
 |----|-------------|
 | R-4.1 | Idle-fade triggers 5 s after last interaction. |
 | R-4.2 | Any interaction aborts fade and restores full opacity. |
-| R-4.3 | Idle-fade affects only buttons; Scrub bar remains full-opacity. |
+| R-4.3 | Idle-fade affects both buttons and Scrub bar. |
 
 ### 5. "More videos" Bar
 | ID | Description |
@@ -64,7 +71,7 @@ Then Player shows Video #n at 0 s, paused, Play toggle = ►
 ```
 Given Player is playing and Controls are dimmed
 When the user taps Next
-Then Controls brighten, Idle-fade restarts, next video auto-plays
+Then Controls brighten, Idle-fade restarts, current video continues playing
 ```
 
 ### Paused navigation

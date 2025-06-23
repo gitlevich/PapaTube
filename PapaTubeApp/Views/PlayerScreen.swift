@@ -44,20 +44,26 @@ struct PlayerScreen: View {
                     .allowsHitTesting(false)
             }
 
-            controlsOverlay
-                .zIndex(2)
+            if controlsVisible {
+                controlsOverlay
+                    .zIndex(2)
+            }
 
-            // Block touches that are outside our controls
-            Color.clear
-                .contentShape(Rectangle())
-                .ignoresSafeArea()
-                .zIndex(1)
+            // Block touches outside controls only during normal playback
+            if !app.isEnded {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .ignoresSafeArea()
+                    .allowsHitTesting(true)
+                    .zIndex(1)
+            }
 
-            // Dim the iOS home indicator area – static, no fade
-            Color.black.opacity(0.4)
-                .ignoresSafeArea(.container, edges: .bottom)
-                .allowsHitTesting(false)
-                .zIndex(1)
+            if !app.isEnded {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea(.container, edges: .bottom)
+                    .allowsHitTesting(false)
+                    .zIndex(1)
+            }
         }
         .sheet(isPresented: $showSettings) {
             SettingsSheet()
@@ -105,14 +111,32 @@ struct PlayerScreen: View {
                 controlsLocked = false
                 buttonOpacity = 1
                 scheduleButtonFade()
-                isPausedOverlayVisible = false
+                // Hide recommendation strip after playback resumes.
+                if !app.isEnded { isPausedOverlayVisible = true } else { isPausedOverlayVisible = false }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    withAnimation { isPausedOverlayVisible = false }
+                }
             } else {
                 if let video = playlistService.videos[safe: app.currentIndex] {
                     playbackStateStore.updatePlaying(for: video.id, isPlaying: false)
                 }
                 fadeWork?.cancel()
                 withAnimation { buttonOpacity = 1 }
-                isPausedOverlayVisible = true
+                if !app.isEnded { isPausedOverlayVisible = true } else { isPausedOverlayVisible = false }
+            }
+        }
+        .onChange(of: app.isEnded) { ended in
+            if ended {
+                isPausedOverlayVisible = false // allow recommendation grid
+                controlsLocked = true
+                extraBottom = 120
+                controlsVisible = false
+            } else {
+                controlsLocked = false
+                extraBottom = 0
+                controlsVisible = true
+                buttonOpacity = 1
+                scheduleButtonFade()
             }
         }
     }
@@ -178,6 +202,7 @@ struct PlayerScreen: View {
     }
 
     private func scheduleButtonFade() {
+        guard app.isPlaying else { return } // fade only while playback running
         fadeWork?.cancel()
         let work = DispatchWorkItem {
             withAnimation(.easeInOut(duration: 0.4)) { buttonOpacity = 0.15 }
