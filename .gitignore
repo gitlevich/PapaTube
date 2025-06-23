@@ -1,0 +1,10 @@
+# SpecStory explanation file
+.specstory/.what-is-this.md
+
+# Xcode secret configs
+Secrets.xcconfig
+
+# Xcode
+DerivedData/
+*.xcuserstate
+*.xcworkspace

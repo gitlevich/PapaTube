@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04291E435A4CDDEF3CF154A1 /* OctoKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9E5CDDF5438BC091F8680B4 /* OctoKit */; };
+		0A64F50FAA27FD6A8D1B3295 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */; };
+		23513AED20208DF87D935ECF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC862EDE0B0B1A9D4263D78 /* Config.swift */; };
+		884713451AB3B2A06854C6C0 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1930077BED55418E0626D /* Video.swift */; };
+		8CD60132DFB9C0492ED1B9E6 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */; };
+		A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDADC268B67BDB4082084C18 /* Collection+Safe.swift */; };
+		BC0B93811797175D8F654BDB /* PlaybackStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */; };
+		C1DE9CD1504D6734B451AF18 /* PtubeAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059557B547534300B254B780 /* PtubeAppApp.swift */; };
+		D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CD7597F06529525CE5528 /* PlayerScreen.swift */; };
+		EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */; };
+		F34BBCA780C3C2920C6D55D3 /* PlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		059557B547534300B254B780 /* PtubeAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtubeAppApp.swift; sourceTree = "<group>"; };
+		0AC862EDE0B0B1A9D4263D78 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateStore.swift; sourceTree = "<group>"; };
+		290CD7597F06529525CE5528 /* PlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScreen.swift; sourceTree = "<group>"; };
+		388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		85B694751FCBC9011C761A45 /* PtubeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PtubeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB42F1E639BD87E58117B048 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		DCC1930077BED55418E0626D /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		EF175A34ED43A295FD3C0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistService.swift; sourceTree = "<group>"; };
+		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFAB025814B9E65AE3B5DC4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CD60132DFB9C0492ED1B9E6 /* YouTubePlayerKit in Frameworks */,
+				04291E435A4CDDEF3CF154A1 /* OctoKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08C466DF0A8E5672E90F5BEB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				21EB72A9A0ECF1835BAF4977 /* PlaybackStateStore.swift */,
+				F1BFBDDDDCE5BA3F1A2F57A5 /* PlaylistService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3A160BA9E1CB27CB5946CFDA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				290CD7597F06529525CE5528 /* PlayerScreen.swift */,
+				D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		503F4A236CCCFC399844EE18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85B694751FCBC9011C761A45 /* PtubeApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5C91528F966A6C4D504A8147 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FDADC268B67BDB4082084C18 /* Collection+Safe.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		60CD7925B145FB5AFA09790B /* PtubeApp */ = {
+			isa = PBXGroup;
+			children = (
+				0AC862EDE0B0B1A9D4263D78 /* Config.swift */,
+				EF175A34ED43A295FD3C0317 /* Info.plist */,
+				388B64550AC15A8F1B8ED085 /* LaunchScreen.storyboard */,
+				059557B547534300B254B780 /* PtubeAppApp.swift */,
+				5C91528F966A6C4D504A8147 /* Extensions */,
+				ACCC72EAE1996D8D67141BAD /* Models */,
+				08C466DF0A8E5672E90F5BEB /* Services */,
+				3A160BA9E1CB27CB5946CFDA /* Views */,
+			);
+			path = PtubeApp;
+			sourceTree = "<group>";
+		};
+		73BEA0A3E048B9B3127FC34A = {
+			isa = PBXGroup;
+			children = (
+				7FCA86BF0A3EABD880B24D23 /* ptube */,
+				60CD7925B145FB5AFA09790B /* PtubeApp */,
+				503F4A236CCCFC399844EE18 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7FCA86BF0A3EABD880B24D23 /* ptube */ = {
+			isa = PBXGroup;
+			children = (
+				CB42F1E639BD87E58117B048 /* Secrets.xcconfig */,
+			);
+			name = ptube;
+			path = .;
+			sourceTree = "<group>";
+		};
+		ACCC72EAE1996D8D67141BAD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DCC1930077BED55418E0626D /* Video.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F1F2498E4CEB382FED46AB53 /* PtubeApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PtubeApp" */;
+			buildPhases = (
+				AF6D8073418A4C7037A4DBDF /* Sources */,
+				F843527681C2DACBF7F5D25C /* Resources */,
+				DFAB025814B9E65AE3B5DC4C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PtubeApp;
+			packageProductDependencies = (
+				221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */,
+				A9E5CDDF5438BC091F8680B4 /* OctoKit */,
+			);
+			productName = PtubeApp;
+			productReference = 85B694751FCBC9011C761A45 /* PtubeApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		401FA62F63E503FF308E4C74 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PtubeApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 73BEA0A3E048B9B3127FC34A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B4938E54F658D0548D97CD3D /* XCRemoteSwiftPackageReference "octokit.swift" */,
+				B5A30A464F4B8F5276F680F1 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F1F2498E4CEB382FED46AB53 /* PtubeApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F843527681C2DACBF7F5D25C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A64F50FAA27FD6A8D1B3295 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AF6D8073418A4C7037A4DBDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */,
+				23513AED20208DF87D935ECF /* Config.swift in Sources */,
+				BC0B93811797175D8F654BDB /* PlaybackStateStore.swift in Sources */,
+				D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */,
+				F34BBCA780C3C2920C6D55D3 /* PlaylistService.swift in Sources */,
+				C1DE9CD1504D6734B451AF18 /* PtubeAppApp.swift in Sources */,
+				884713451AB3B2A06854C6C0 /* Video.swift in Sources */,
+				EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		614110DFC90042839A2DACF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB42F1E639BD87E58117B048 /* Secrets.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = YBCP8WY4VN;
+				INFOPLIST_FILE = PtubeApp/Info.plist;
+				INFO_PLIST_FILE = PtubeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gitlevich.ptube.PtubeApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		A5A3865CF557CBD4DB3BF645 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		BF189F6ED462D5CA29630340 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB42F1E639BD87E58117B048 /* Secrets.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = YBCP8WY4VN;
+				INFOPLIST_FILE = PtubeApp/Info.plist;
+				INFO_PLIST_FILE = PtubeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gitlevich.ptube.PtubeApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		DFCE835295D9502E99C7FE70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5297898127E90C98FC500D12 /* Build configuration list for PBXNativeTarget "PtubeApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				614110DFC90042839A2DACF6 /* Debug */,
+				BF189F6ED462D5CA29630340 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C8FE649686C29B74E2E345E3 /* Build configuration list for PBXProject "PtubeApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFCE835295D9502E99C7FE70 /* Debug */,
+				A5A3865CF557CBD4DB3BF645 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B4938E54F658D0548D97CD3D /* XCRemoteSwiftPackageReference "octokit.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nerdishbynature/octokit.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.11.0;
+			};
+		};
+		B5A30A464F4B8F5276F680F1 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		221E7EE2C5E8DF311AB2312E /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5A30A464F4B8F5276F680F1 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
+		};
+		A9E5CDDF5438BC091F8680B4 /* OctoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B4938E54F658D0548D97CD3D /* XCRemoteSwiftPackageReference "octokit.swift" */;
+			productName = OctoKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 401FA62F63E503FF308E4C74 /* Project object */;
+}

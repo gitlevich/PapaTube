@@ -1,0 +1,33 @@
+name: PtubeApp
+options:
+  bundleIdPrefix: com.gitlevich.ptube
+configs:
+  Debug: debug
+  Release: release
+settings:
+  IPHONEOS_DEPLOYMENT_TARGET: 16.0
+  TARGETED_DEVICE_FAMILY: 2 # 2 = iPad only
+targets:
+  PtubeApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources: [ PtubeApp ]
+    settings:
+      INFO_PLIST_FILE: PtubeApp/Info.plist
+      TARGETED_DEVICE_FAMILY: 2
+    scheme:
+      testTargets: []
+    dependencies:
+    - package: YouTubePlayerKit
+    - package: OctoKit
+    configFiles:
+      Debug: Secrets.xcconfig
+      Release: Secrets.xcconfig
+packages:
+  YouTubePlayerKit:
+    url: https://github.com/SvenTiigi/YouTubePlayerKit.git
+    from: 2.0.0
+  OctoKit:
+    url: https://github.com/nerdishbynature/octokit.swift.git
+    from: 0.11.0
