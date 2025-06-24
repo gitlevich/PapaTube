@@ -22,11 +22,14 @@ final class PlaylistStore: ObservableObject {
     private let auth = AuthService.shared
     private let defaults = UserDefaults.standard
     private let keyPlaylistID = "ytPlaylistID"
+    private let session: NetworkSession
 
     private var loadTask: Task<Void, Never>? = nil
     private var bag = Set<AnyCancellable>()
 
-    init() {
+    init(session: NetworkSession = URLSession.shared) {
+        self.session = session
+
         // preload cached
         if let data = try? Data(contentsOf: cacheURL()),
            let vids = try? JSONDecoder().decode([Video].self, from: data) {
@@ -110,7 +113,7 @@ final class PlaylistStore: ObservableObject {
             var req = URLRequest(url: comp.url!)
             req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-            let (data, resp) = try await URLSession.shared.data(for: req)
+            let (data, resp) = try await session.data(for: req)
             guard let http = resp as? HTTPURLResponse, http.statusCode == 200 else {
                 throw URLError(.badServerResponse)
             }

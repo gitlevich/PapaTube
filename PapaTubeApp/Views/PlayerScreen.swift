@@ -22,7 +22,12 @@ struct PlayerScreen: View {
 
     @EnvironmentObject var app: AppModel
     private var playlistStore: PlaylistStore { app.playlistStore }
-    private var player: YouTubePlayer { app.player }
+    private var player: YouTubePlayer {
+        if let rp = app.player as? RealPlayer { return rp.wrapped }
+        // Fallback for future: if stored player is already YouTubePlayer
+        if let yp = app.player as? YouTubePlayer { return yp }
+        fatalError("Unsupported player type")
+    }
 
     var body: some View {
         ZStack {
@@ -71,6 +76,8 @@ struct PlayerScreen: View {
                     .contentShape(Rectangle())
                     .ignoresSafeArea()
                     .allowsHitTesting(true)
+                    .onTapGesture { wakeControls() }
+                    .accessibilityIdentifier("overlayTapArea")
                     .zIndex(1)
             }
 
@@ -267,6 +274,21 @@ struct PlayerScreen: View {
 
         app.load(index: app.currentIndex)
     }
+
+    // MARK: - Helper to re-show controls on user tap
+    private func wakeControls() {
+        guard !controlsLocked else { return }
+        withAnimation { buttonOpacity = 1 }
+        controlsVisible = true
+        scheduleButtonFade()
+    }
 }
 
 // MARK: - End of PlayerScreen 
+
+#if DEBUG
+#if canImport(ViewInspector)
+import ViewInspector
+extension PlayerScreen: Inspectable {}
+#endif
+#endif 

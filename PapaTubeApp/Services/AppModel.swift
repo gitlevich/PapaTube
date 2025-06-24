@@ -6,8 +6,8 @@ import YouTubePlayerKit
 @MainActor
 final class AppModel: ObservableObject {
     // MARK: - Sub-objects
-    let playlistStore = PlaylistStore()
-    let player: YouTubePlayer
+    let playlistStore: PlaylistStore
+    let player: PlayerProtocol
 
     // MARK: - Published UI state
     @Published private(set) var playlist: [Video] = []
@@ -26,13 +26,15 @@ final class AppModel: ObservableObject {
     private let keyPlaying = "playingStates"
     private let keyIndex = "currentIndex"
 
-    init() {
-        player = YouTubePlayer(
-            source: .video(id: ""),
-            parameters: .init(autoPlay: false,
-                              showControls: false,
-                              showFullscreenButton: false,
-                              showCaptions: false))
+    init(player: PlayerProtocol? = nil, playlistStore: PlaylistStore? = nil) {
+        self.playlistStore = playlistStore ?? PlaylistStore()
+
+        self.player = player ?? RealPlayer(wrapped: YouTubePlayer(
+             source: .video(id: ""),
+             parameters: .init(autoPlay: false,
+                               showControls: false,
+                               showFullscreenButton: false,
+                               showCaptions: false)))
 
         // Load persisted state
         currentIndex = defaults.integer(forKey: keyIndex)
@@ -46,7 +48,7 @@ final class AppModel: ObservableObject {
         }
 
         // Relay playlist updates.
-        playlistStore.$state
+        self.playlistStore.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] st in
                 guard let self else { return }
@@ -61,10 +63,10 @@ final class AppModel: ObservableObject {
             .store(in: &bag)
 
         // Start with cached/remote playlist.
-        Task { await playlistStore.refresh() }
+        Task { await self.playlistStore.refresh() }
 
         // Keep isPlaying in sync with actual player callbacks.
-        player.playbackStatePublisher
+        self.player.playbackStatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 switch state {
@@ -104,7 +106,7 @@ final class AppModel: ObservableObject {
 
         let id = playlist[index].id
         Task {
-            _ = try? await player.load(source: .video(id: id))
+            try? await player.load(source: .video(id: id))
             if isPlaying {
                 try? await player.play()
             } else {
