@@ -22,10 +22,15 @@
 		EFE384CFDDCADC2BCE405F0D /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD9EAFADEFF71799940DE3 /* VideoPlayerView.swift */; };
 		F544CDD02E09F0E600BE2079 /* interactions.md in Resources */ = {isa = PBXBuildFile; fileRef = F544CDCF2E09F0E600BE2079 /* interactions.md */; };
 		F544CDD22E09F26500BE2079 /* touch_map.md in Resources */ = {isa = PBXBuildFile; fileRef = F544CDD12E09F26500BE2079 /* touch_map.md */; };
+		F544CDE12E0A18D700BE2079 /* InteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F544CDE02E0A18D700BE2079 /* InteractionController.swift */; };
+		F544CDE22E0A18D700BE2079 /* InteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F544CDE02E0A18D700BE2079 /* InteractionController.swift */; };
+		F544CDE42E0A18EA00BE2079 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = F544CDE32E0A18EA00BE2079 /* Playlist.swift */; };
+		F544CDE52E0A18EA00BE2079 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = F544CDE32E0A18EA00BE2079 /* Playlist.swift */; };
 		F56863382E08EB1F00067D6E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F56863372E08EB1F00067D6E /* GoogleSignIn */; };
 		F568633A2E08EB1F00067D6E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F56863392E08EB1F00067D6E /* GoogleSignInSwift */; };
 		F57FB0682E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
 		F57FB0692E09CA3D00E337DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F57FB0672E09CA3D00E337DD /* Assets.xcassets */; };
+		884713452AB3B2A06854C6C1 /* Video.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = DCC1930077BED55418E0626D /* Video.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,8 @@
 		EF175A34ED43A295FD3C0317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F544CDCF2E09F0E600BE2079 /* interactions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = interactions.md; sourceTree = "<group>"; };
 		F544CDD12E09F26500BE2079 /* touch_map.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = touch_map.md; sourceTree = "<group>"; };
+		F544CDE02E0A18D700BE2079 /* InteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionController.swift; sourceTree = "<group>"; };
+		F544CDE32E0A18EA00BE2079 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		F56863412E091FEF00067D6E /* PapaTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PapaTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F57FB0672E09CA3D00E337DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDADC268B67BDB4082084C18 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
@@ -88,6 +95,7 @@
 		08C466DF0A8E5672E90F5BEB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F544CDE02E0A18D700BE2079 /* InteractionController.swift */,
 				666666666666666666666666 /* AppModel.swift */,
 				444444444444444444444444 /* PlaylistStore.swift */,
 				222222222222222222222222 /* AuthService.swift */,
@@ -153,6 +161,7 @@
 		ACCC72EAE1996D8D67141BAD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F544CDE32E0A18EA00BE2079 /* Playlist.swift */,
 				DCC1930077BED55418E0626D /* Video.swift */,
 			);
 			path = Models;
@@ -292,6 +301,7 @@
 			files = (
 				A30E806CA8C624699748085B /* Collection+Safe.swift in Sources */,
 				999999999999999999999999 /* SettingsSheet.swift in Sources */,
+				F544CDE22E0A18D700BE2079 /* InteractionController.swift in Sources */,
 				777777777777777777777777 /* AppModel.swift in Sources */,
 				D73E3967BEDA241F2081ED89 /* PlayerScreen.swift in Sources */,
 				C1DE9CD1504D6734B451AF18 /* PapaTubeApp.swift in Sources */,
@@ -300,6 +310,7 @@
 				555555555555555555555555 /* PlaylistStore.swift in Sources */,
 				333333333333333333333333 /* AuthService.swift in Sources */,
 				AA111111111111111111111111 /* RecommendationGrid.swift in Sources */,
+				F544CDE42E0A18EA00BE2079 /* Playlist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +318,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F544CDE12E0A18D700BE2079 /* InteractionController.swift in Sources */,
+				F544CDE52E0A18EA00BE2079 /* Playlist.swift in Sources */,
+				884713452AB3B2A06854C6C1 /* Video.swift in Sources (Tests) */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

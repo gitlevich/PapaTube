@@ -1,35 +1,6 @@
 import XCTest
 @testable import PapaTubeApp
 
-#if canImport(XCTest)
-// Local lightweight replica for test target if the app target hasn't linked the file yet.
-@MainActor
-final class InteractionController: ObservableObject {
-    enum ControlsOpacity: Equatable { case full, faded }
-
-    @Published var playlist: [Video]
-    @Published var currentIndex = 0
-    @Published var isPlaying = false
-    @Published var isEnded = false
-    @Published var controlsOpacity: ControlsOpacity = .full
-
-    var prevEnabled: Bool { currentIndex > 0 }
-    var nextEnabled: Bool { currentIndex < playlist.count - 1 }
-
-    private var idle: Double = 0
-
-    init(playlist: [Video]) { self.playlist = playlist }
-
-    func togglePlayPause() { isPlaying.toggle(); resetIdle() }
-    func next() { guard nextEnabled else { return }; currentIndex += 1; isPlaying = true; resetIdle() }
-    func prev() { guard prevEnabled else { return }; currentIndex -= 1; isPlaying = true; resetIdle() }
-    func scrub(to: Double) { resetIdle() }
-    func tick(seconds: Double) { idle += seconds; if idle >= 5 && isPlaying { controlsOpacity = .faded } }
-
-    private func resetIdle() { idle = 0; controlsOpacity = .full }
-}
-#endif
-
 @MainActor final class InteractionSpecTests: XCTestCase {
 
     private func samplePlaylist() -> [Video] {
@@ -44,7 +15,6 @@ final class InteractionController: ObservableObject {
     func testPlay() {
         /* GIVEN Controls are visible, video is paused, Play toggle shows "Play" */
         let ctrl = InteractionController(playlist: samplePlaylist())
-        ctrl.isPlaying = false // paused
 
         /* WHEN the viewer presses the Play toggle */
         ctrl.togglePlayPause()
@@ -56,8 +26,8 @@ final class InteractionController: ObservableObject {
     // 2. Pause interaction
     func testPause() {
         let ctrl = InteractionController(playlist: samplePlaylist())
-        ctrl.isPlaying = true
-        ctrl.togglePlayPause()
+        ctrl.togglePlayPause() // start playing
+        ctrl.togglePlayPause() // now pause
         XCTAssertFalse(ctrl.isPlaying)
     }
 
@@ -92,9 +62,73 @@ final class InteractionController: ObservableObject {
 
     // 6. Idle-fade interaction
     func testIdleFade() {
+        /* GIVEN Controls are visible and playing */
         let ctrl = InteractionController(playlist: samplePlaylist())
         ctrl.togglePlayPause() // playing
+        /* WHEN 5 seconds pass */
         ctrl.tick(seconds: 5.1)
+        /* THEN controls faded */
         XCTAssertEqual(ctrl.controlsOpacity, .faded)
+    }
+
+    // 7. Wake Controls
+    func testWakeControls() {
+        let ctrl = InteractionController(playlist: samplePlaylist())
+        ctrl.togglePlayPause() // playing
+        ctrl.tick(seconds: 5.1) // fade
+        XCTAssertEqual(ctrl.controlsOpacity, .faded)
+        /* WHEN viewer taps screen */
+        ctrl.wakeControls()
+        /* THEN controls return to full */
+        XCTAssertEqual(ctrl.controlsOpacity, .full)
+    }
+
+    // 9. Video completion -> Recommendation Grid
+    func testVideoCompletionShowsGrid() {
+        let ctrl = InteractionController(playlist: samplePlaylist())
+        ctrl.togglePlayPause() // playing
+        /* WHEN video ends */
+        ctrl.videoEnded()
+        /* THEN Grid visible and controls hidden */
+        XCTAssertTrue(ctrl.recommendationGridVisible)
+        XCTAssertFalse(ctrl.isPlaying)
+    }
+
+    // 10. Select video from grid
+    func testSelectVideoFromGrid() {
+        let ctrl = InteractionController(playlist: samplePlaylist())
+        ctrl.videoEnded() // grid visible
+        ctrl.selectVideoFromGrid(index: 2)
+        XCTAssertFalse(ctrl.recommendationGridVisible)
+        XCTAssertEqual(ctrl.currentIndex, 2)
+        XCTAssertTrue(ctrl.isPlaying)
+    }
+
+    // 11 & 12. Open settings and change playlist
+    func testChangePlaylistResetsState() {
+        let ctrl = InteractionController(playlist: samplePlaylist())
+        ctrl.togglePlayPause() // playing index 0
+        ctrl.presentSettings()
+        XCTAssertTrue(ctrl.settingsActive)
+
+        let newList = [Video(title: "New", year: nil, youtube_url: "https://youtu.be/99")]
+        ctrl.changePlaylist(id: "new", videos: newList)
+
+        XCTAssertFalse(ctrl.settingsActive)
+        XCTAssertEqual(ctrl.playlist.count, 1)
+        XCTAssertEqual(ctrl.currentIndex, 0)
+        XCTAssertFalse(ctrl.prevEnabled)
+        XCTAssertFalse(ctrl.nextEnabled)
+        XCTAssertFalse(ctrl.isPlaying)
+    }
+
+    // 13 & 14 Google sign-in/out
+    func testAuthFlow() {
+        let ctrl = InteractionController(playlist: samplePlaylist())
+        XCTAssertFalse(ctrl.isAuthenticated)
+        ctrl.signIn()
+        XCTAssertTrue(ctrl.isAuthenticated)
+        ctrl.signOut()
+        XCTAssertFalse(ctrl.isAuthenticated)
     }
 } 

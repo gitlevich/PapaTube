@@ -31,12 +31,12 @@
 3. **Next**  
    *Given* the Playlist has a next Video and the Next button is enabled.  
    *When* the viewer presses the Next button.  
-   *Then* the next Video begins playing; Prev becomes enabled and Next may disable if now at the last Video.
+   *Then* the next Video begins playing; Prev becomes enabled and Next may disable if now at the last Video and the scrub bar position is reset at the start.
 
 4. **Previous**  
    *Given* the Playlist has a previous Video and the Prev button is enabled.  
    *When* the viewer presses the Prev button.  
-   *Then* the previous Video begins playing; Next becomes enabled and Prev may disable if now at the first Video.
+   *Then* the previous Video begins playing; Next becomes enabled and Prev may disable if now at the first Video and the scrub bar position is reset at the start.
 
 5. **Scrub (seek)**  
    *Given* Controls are visible and the Scrub bar shows current progress.  

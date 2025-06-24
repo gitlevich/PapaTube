@@ -29,4 +29,10 @@ extension Video: Equatable {
     static func == (lhs: Video, rhs: Video) -> Bool {
         lhs.id == rhs.id
     }
+}
+
+extension Video: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 } 
